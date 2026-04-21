@@ -1,4 +1,5 @@
 let S={queue:[],cur:null,sk:0,tot:0,ans:false,from:'home'};
+
 function ls(k,v){if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}
 function loadS(){
   const s=ls('yj4')||{};
@@ -13,13 +14,23 @@ function changeFS(v){document.documentElement.style.setProperty('--fs',v);saveS(
 function activeCats(){const s=ls('yj4')||{};const c=[];if(s.poem!==false)c.push('poem');if(s.idiom!==false)c.push('idiom');if(s.proverb!==false)c.push('proverb');return c.length?c:['poem','idiom','proverb'];}
 function buildQ(){const pool=Q.filter(q=>activeCats().includes(q.c));S.queue=[...pool].sort(()=>Math.random()-.5);}
 function nextQ(){if(!S.queue.length)buildQ();S.cur=S.queue.pop();S.ans=false;render();}
+
+function getBestStreak(){return ls('yj_best')||0;}
+function saveBestStreak(n){ls('yj_best',n);}
+
+function updateStreakDisplay(){
+  const best=getBestStreak();
+  document.getElementById('skN').textContent=S.sk;
+  document.getElementById('bestN').textContent=best;
+}
+
 function render(){
   const q=S.cur;
   const labels={poem:'古诗',idiom:'成语',proverb:'谚语'};
   const cls={poem:'tp',idiom:'ti',proverb:'tv'};
   const tag=document.getElementById('catTag');
   tag.textContent=labels[q.c];tag.className='ctg '+cls[q.c];
-  document.getElementById('skN').textContent=S.sk;
+  updateStreakDisplay();
   document.getElementById('gBg').style.backgroundImage=`url('${q.i}')`;
   document.getElementById('qSrc').textContent=q.a;
   const qEl=document.getElementById('qTx');
@@ -31,11 +42,22 @@ function render(){
     b.onclick=()=>pick(opt,b);grid.appendChild(b);
   });
   document.getElementById('mpn').classList.remove('show');
+  document.getElementById('recordBanner').classList.remove('show');
 }
+
 function pick(choice,btn){
   if(S.ans)return;S.ans=true;const q=S.cur;
   if(choice===q.b){
     btn.classList.add('ok');S.sk++;S.tot++;
+    updateStreakDisplay();
+
+    // check for new record
+    const prev=getBestStreak();
+    if(S.sk>prev){
+      saveBestStreak(S.sk);
+      showRecordBanner(S.sk);
+    }
+
     document.getElementById('mph').innerHTML=q.f.replace(q.b,`<span class="hl">${q.b}</span>`);
     document.getElementById('mpb').textContent=q.a;
     document.getElementById('mpe').textContent=q.e;
@@ -43,13 +65,22 @@ function pick(choice,btn){
     if(S.tot>0&&S.tot%10===0){setTimeout(()=>milestone(),2400);}
     else{setTimeout(()=>nextQ(),2600);}
   } else {
-    btn.classList.add('no');S.sk=0;document.getElementById('skN').textContent=0;
+    btn.classList.add('no');S.sk=0;
+    updateStreakDisplay();
     setTimeout(()=>{
       [...document.getElementById('agd').children].forEach(b=>{if(b.textContent===q.b)b.classList.add('ok');});
       setTimeout(()=>nextQ(),1900);
     },500);
   }
 }
+
+function showRecordBanner(n){
+  const el=document.getElementById('recordBanner');
+  el.textContent= n===1 ? '🏅 首次连击！' : `🏆 新纪录！连续答对 ${n} 题！`;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
+}
+
 function milestone(){
   const msgs=['答得好！','真厉害！','继续加油！','棒极了！','了不起！'];
   const emojis=['🎉','🌟','🏆','🎊','👏'];
@@ -64,5 +95,5 @@ function startGame(){buildQ();scr('game');nextQ();}
 function scr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function showSettings(from){S.from=from;document.getElementById('bkBtn').textContent=from==='home'?'← 返回':'← 返回游戏';loadS();scr('settings');}
 function goBack(){scr(S.from);}
-function resetProgress(){S.sk=0;S.tot=0;buildQ();alert('进度已重置 ✓');}
+function resetProgress(){S.sk=0;S.tot=0;saveBestStreak(0);buildQ();alert('进度已重置 ✓');}
 loadS();
