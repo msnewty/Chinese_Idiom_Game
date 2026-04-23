@@ -78,6 +78,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--p);font-family
 .tp{color:var(--grn);background:var(--gs)}.ti{color:var(--red);background:var(--rs)}.tv{color:var(--gld);background:var(--gl)}
 /* History category tag */
 .th{color:var(--hgld2);background:rgba(212,160,23,.15);border-color:var(--hgld)}
+/* History era badge variants */
+.th-qin{color:#e8c46a;background:rgba(80,20,0,.5);border-color:#c07820}
+.th-han{color:#f0d080;background:rgba(60,30,0,.5);border-color:#b08020}
+.th-three{color:#e07060;background:rgba(80,10,10,.5);border-color:#c03020}
+.th-jin{color:#c0a060;background:rgba(50,30,10,.5);border-color:#907030}
+.th-sui{color:#80c0a0;background:rgba(10,40,30,.5);border-color:#406050}
+.th-tang{color:#f0c040;background:rgba(60,40,0,.5);border-color:#c09020}
+.th-song{color:#80b0e0;background:rgba(10,30,60,.5);border-color:#3060a0}
+.th-yuan{color:#c080e0;background:rgba(40,10,60,.5);border-color:#8030a0}
+.th-ming{color:#e08040;background:rgba(60,20,0,.5);border-color:#a04010}
+.th-qing{color:#80d0c0;background:rgba(0,40,40,.5);border-color:#208060}
+.th-modern{color:#d0a0a0;background:rgba(60,10,10,.5);border-color:#903030}
+.th-spring{color:#a0d080;background:rgba(20,50,10,.5);border-color:#508030}
+.th-war{color:#d0a060;background:rgba(60,30,0,.5);border-color:#905020}
+.th-general{color:var(--hgld2);background:rgba(212,160,23,.15);border-color:var(--hgld)}
 /* Streak */
 .skb{display:flex;flex-direction:column;align-items:center;gap:2px}
 .sk-main{display:flex;align-items:center;gap:7px;font-size:calc(22px*var(--fs));font-weight:700;color:var(--ink)}
@@ -322,16 +337,16 @@ input:checked+.tgtr::before{transform:translateX(28px)}
   <div class="sbl cats-section" id="catsSection">
     <div class="slb">内容类别</div>
     <div class="tgl">
-      <div class="tgr"><span class="tgn">古诗词</span><label class="tgsw"><input type="checkbox" id="tog-poem" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
-      <div class="tgr"><span class="tgn">成语</span><label class="tgsw"><input type="checkbox" id="tog-idiom" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
-      <div class="tgr"><span class="tgn">谚语短语</span><label class="tgsw"><input type="checkbox" id="tog-proverb" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
+      <div class="tgr"><span class="tgn">古诗词</span><label class="tgsw"><input type="checkbox" id="tog-poem" checked onchange="saveS(event)"/><span class="tgtr"></span></label></div>
+      <div class="tgr"><span class="tgn">成语</span><label class="tgsw"><input type="checkbox" id="tog-idiom" checked onchange="saveS(event)"/><span class="tgtr"></span></label></div>
+      <div class="tgr"><span class="tgn">谚语短语</span><label class="tgsw"><input type="checkbox" id="tog-proverb" checked onchange="saveS(event)"/><span class="tgtr"></span></label></div>
     </div>
   </div>
   <div class="sbl"><button class="rsb" onclick="resetProgress()">重置游戏进度</button></div>
 </div>
 
 <script src="data.js"></script>
-<script src="data-history.js"></script>
+<script src="data-history.js?v=2"></script>
 <script>
 // ── STATE ─────────────────────────────────────────────────────
 // Two independent game states
@@ -357,14 +372,13 @@ function loadS(){
   document.getElementById('tog-idiom').checked=s.idiom!==false;
   document.getElementById('tog-proverb').checked=s.proverb!==false;
 }
-function saveS(){
-  // enforce at least one category on
+function saveS(e){
   const poem=document.getElementById('tog-poem').checked;
   const idiom=document.getElementById('tog-idiom').checked;
   const proverb=document.getElementById('tog-proverb').checked;
   if(!poem&&!idiom&&!proverb){
-    // revert last toggle
-    event.target.checked=true;return;
+    if(e&&e.target)e.target.checked=true;
+    return;
   }
   ls('yj5',{fs:parseFloat(document.getElementById('fsSl').value),poem,idiom,proverb});
 }
@@ -392,7 +406,7 @@ function buildQ(mode){
   const d1=pool.filter(q=>q.d===1).sort(()=>Math.random()-.5);
   const d2=pool.filter(q=>q.d===2).sort(()=>Math.random()-.5);
   const d3=pool.filter(q=>q.d===3).sort(()=>Math.random()-.5);
-  const warmup=Math.min(30,Math.floor(d1.length*0.5));
+  const warmup=Math.min(30,d1.length);
   const easy=d1.slice(0,warmup);
   const d1rest=d1.slice(warmup).sort(()=>Math.random()-.5);
   const phase2=[...d1rest,...d2].sort(()=>Math.random()-.5);
@@ -449,6 +463,18 @@ function render(mode){
   } else {
     document.getElementById('hgBg').style.backgroundImage=`url('${q.i}')`;
     document.getElementById('hQSrc').textContent=q.a;
+    // Era badge
+    const eraMap={
+      '秦朝历史':['秦朝','th-qin'],'汉朝历史':['汉朝','th-han'],'三国历史':['三国','th-three'],
+      '晋朝历史':['晋朝','th-jin'],'隋朝历史':['隋朝','th-sui'],'唐朝历史':['唐朝','th-tang'],
+      '宋朝历史':['宋朝','th-song'],'元朝历史':['元朝','th-yuan'],'明朝历史':['明朝','th-ming'],
+      '清朝历史':['清朝','th-qing'],'近代历史':['近代','th-modern'],'春秋历史':['春秋','th-spring'],
+      '战国历史':['战国','th-war'],'中国历史':['历史','th-general'],
+    };
+    const [eraLabel,eraCls]=eraMap[q.a]||['历史','th-general'];
+    const hTag=document.getElementById('hCatTag');
+    hTag.textContent=eraLabel;
+    hTag.className='ctg '+eraCls;
     const qEl=document.getElementById('hQTx');
     qEl.innerHTML=q.t.replace('，','，<br>').replace(`{${q.b}}`,`<span class="blk-h">＿</span>`);
     qEl.classList.remove('sli');void qEl.offsetWidth;qEl.classList.add('sli');
@@ -548,14 +574,20 @@ function milestone(mode){
 
 function resumeGame(mode){
   if(milestoneTimer){clearTimeout(milestoneTimer);milestoneTimer=null;}
-  scr(mode==='literary'?'game':'game-history');
-  nextQ(mode);
+  const target=mode==='literary'?'game':'game-history';
+  if(!document.getElementById(target).classList.contains('active')){
+    scr(target);
+    nextQ(mode);
+  }
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────
 function startMode(mode){
   currentMode=mode;
-  if(mode==='history'&&!window.QH){alert('历史题库加载失败，请刷新页面');return;}
+  if(mode==='history'&&(!window.QH||window.QH.length===0)){
+    alert('历史题库加载失败（QH=' + (window.QH ? window.QH.length : 'undefined') + '），请刷新页面');
+    return;
+  }
   buildQ(mode);
   scr(mode==='literary'?'game':'game-history');
   nextQ(mode);
