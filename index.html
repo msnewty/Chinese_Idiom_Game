@@ -1,4 +1,4 @@
-h<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"/>
@@ -6,16 +6,7 @@ h<!DOCTYPE html>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="theme-color" content="#f2e8d5"/>
 <title>益记 · 记忆游戏</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet"/>
-  <style>
-    @font-face {
-        font-family: 'Ma Shan Zheng';
-        src: url('MaShanZheng-Regular.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-    }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet"/>
 <style>
 :root{--fs:1;--p:#f2e8d5;--p2:#e8d9bc;--ink:#1c1008;--im:rgba(28,16,8,0.42);--red:#8b1a1a;--rs:#f5e0e0;--grn:#1a4a2e;--gs:#dff0e8;--gld:#7a5c10;--gl:#f5ead0;--bd:rgba(28,16,8,0.13);--sh:rgba(28,16,8,0.09);--r:14px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -35,7 +26,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--p);font-family
 .hbn:active{transform:scale(.96);opacity:.88}
 .hcf{font-size:calc(17px*var(--fs));color:var(--im);cursor:pointer;letter-spacing:3px;padding:10px}
 #game{background:var(--p);justify-content:flex-start}
-.gib{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.09;filter:sepia(70%) saturate(.5);transition:background-image .6s}
+.gib{position:absolute;inset:0;background-size:cover;background-position:center;background-color:#c8b89a;opacity:.09;filter:sepia(70%) saturate(.5);transition:background-image .6s}
 .gvg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,rgba(242,232,213,.72) 100%)}
 .gln{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(90deg,rgba(28,16,8,.035) 0,rgba(28,16,8,.035) 1px,transparent 1px,transparent 55px)}
 .gbt,.gbb{position:absolute;left:0;right:0;height:4px;background:rgba(28,16,8,.12)}
@@ -168,7 +159,7 @@ input:checked+.tgtr::before{transform:translateX(28px)}
   <div class="sbl">
     <div class="slb">内容类别</div>
     <div class="tgl">
-      <div class="tgr"><span class="tgn">古诗名句</span><label class="tgsw"><input type="checkbox" id="tog-poem" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
+      <div class="tgr"><span class="tgn">古诗词</span><label class="tgsw"><input type="checkbox" id="tog-poem" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
       <div class="tgr"><span class="tgn">成语</span><label class="tgsw"><input type="checkbox" id="tog-idiom" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
       <div class="tgr"><span class="tgn">谚语短语</span><label class="tgsw"><input type="checkbox" id="tog-proverb" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
     </div>
@@ -178,28 +169,59 @@ input:checked+.tgtr::before{transform:translateX(28px)}
 
 <script src="data.js"></script>
 <script>
+// ── STATE ─────────────────────────────────────────────────────
 let S={queue:[],cur:null,sk:0,tot:0,ans:false,from:'home'};
 
 function ls(k,v){if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}
-
 function getBest(){return ls('yj_best')||0;}
 function saveBest(n){ls('yj_best',n);}
 
 function loadS(){
-  const s=ls('yj4')||{};
+  const s=ls('yj5')||{};
   document.documentElement.style.setProperty('--fs',s.fs||1);
   document.getElementById('fsSl').value=s.fs||1;
   document.getElementById('tog-poem').checked=s.poem!==false;
   document.getElementById('tog-idiom').checked=s.idiom!==false;
   document.getElementById('tog-proverb').checked=s.proverb!==false;
 }
-function saveS(){ls('yj4',{fs:parseFloat(document.getElementById('fsSl').value),poem:document.getElementById('tog-poem').checked,idiom:document.getElementById('tog-idiom').checked,proverb:document.getElementById('tog-proverb').checked});}
+function saveS(){ls('yj5',{fs:parseFloat(document.getElementById('fsSl').value),poem:document.getElementById('tog-poem').checked,idiom:document.getElementById('tog-idiom').checked,proverb:document.getElementById('tog-proverb').checked});}
 function changeFS(v){document.documentElement.style.setProperty('--fs',v);saveS();}
 
-function activeCats(){const s=ls('yj4')||{};const c=[];if(s.poem!==false)c.push('poem');if(s.idiom!==false)c.push('idiom');if(s.proverb!==false)c.push('proverb');return c.length?c:['poem','idiom','proverb'];}
-function buildQ(){const pool=Q.filter(q=>activeCats().includes(q.c));S.queue=[...pool].sort(()=>Math.random()-.5);}
-function nextQ(){if(!S.queue.length)buildQ();S.cur=S.queue.pop();S.ans=false;render();}
+function activeCats(){
+  const s=ls('yj5')||{};
+  const c=[];
+  if(s.poem!==false)c.push('poem');
+  if(s.idiom!==false)c.push('idiom');
+  if(s.proverb!==false)c.push('proverb');
+  return c.length?c:['poem','idiom','proverb'];
+}
 
+// ── QUEUE BUILDER with difficulty progression ─────────────────
+// First 20 questions: difficulty 1 only
+// After 20: mix difficulty 1 & 2
+// After 40: mix all difficulties
+function buildQ(){
+  const cats=activeCats();
+  const pool=Q.filter(q=>cats.includes(q.c));
+  const d1=pool.filter(q=>q.d===1).sort(()=>Math.random()-.5);
+  const d2=pool.filter(q=>q.d===2).sort(()=>Math.random()-.5);
+  const d3=pool.filter(q=>q.d===3).sort(()=>Math.random()-.5);
+  // Build queue: 20 easy → mixed easy+medium → then all
+  // We store as segments that get consumed in order
+  const easy20=d1.slice(0,20);
+  const rest=[...d1.slice(20),...d2,...d3].sort(()=>Math.random()-.5);
+  S.queue=[...rest,...easy20].reverse(); // reversed because we pop from end
+  // Note: easy20 goes at END of array so they are popped FIRST
+}
+
+function nextQ(){
+  if(!S.queue.length)buildQ();
+  S.cur=S.queue.pop();
+  S.ans=false;
+  render();
+}
+
+// ── RENDER ────────────────────────────────────────────────────
 function updateStreak(){
   document.getElementById('skN').textContent=S.sk;
   document.getElementById('bestN').textContent=getBest();
@@ -207,23 +229,64 @@ function updateStreak(){
 
 function render(){
   const q=S.cur;
-  const labels={poem:'古诗',idiom:'成语',proverb:'谚语'};
+  const labels={poem:'古诗词',idiom:'成语',proverb:'谚语'};
   const cls={poem:'tp',idiom:'ti',proverb:'tv'};
   const tag=document.getElementById('catTag');
-  tag.textContent=labels[q.c];tag.className='ctg '+cls[q.c];
+  tag.textContent=labels[q.c];
+  tag.className='ctg '+cls[q.c];
   updateStreak();
   document.getElementById('gBg').style.backgroundImage=`url('${q.i}')`;
   document.getElementById('qSrc').textContent=q.a;
   const qEl=document.getElementById('qTx');
   qEl.innerHTML=q.t.replace(`{${q.b}}`,`<span class="blk">＿</span>`);
   qEl.classList.remove('sli');void qEl.offsetWidth;qEl.classList.add('sli');
-  const grid=document.getElementById('agd');grid.innerHTML='';
+  const grid=document.getElementById('agd');
+  grid.innerHTML='';
   [...q.o].sort(()=>Math.random()-.5).forEach(opt=>{
-    const b=document.createElement('button');b.className='abt';b.textContent=opt;
-    b.onclick=()=>pick(opt,b);grid.appendChild(b);
+    const b=document.createElement('button');
+    b.className='abt';b.textContent=opt;
+    b.onclick=()=>pick(opt,b);
+    grid.appendChild(b);
   });
   document.getElementById('mpn').classList.remove('show');
   document.getElementById('recBanner').classList.remove('show');
+}
+
+// ── SHOW MEANING (correct or wrong) ──────────────────────────
+function showMeaning(q){
+  const hi=q.t.replace(`{${q.b}}`,`<span class="hl">${q.b}</span>`).replace(/[{}]/g,'');
+  document.getElementById('mph').innerHTML=hi;
+  document.getElementById('mpb').textContent=q.a;
+  document.getElementById('mpe').textContent=q.e;
+  document.getElementById('mpn').classList.add('show');
+}
+
+// ── PICK ANSWER ───────────────────────────────────────────────
+function pick(choice,btn){
+  if(S.ans)return;
+  S.ans=true;
+  const q=S.cur;
+  if(choice===q.b){
+    btn.classList.add('ok');
+    S.sk++;S.tot++;
+    const prev=getBest();
+    if(S.sk>prev){saveBest(S.sk);showRecordBanner(S.sk);}
+    updateStreak();
+    showMeaning(q);
+    if(S.tot>0&&S.tot%10===0){setTimeout(()=>milestone(),2400);}
+    else{setTimeout(()=>nextQ(),2800);}
+  } else {
+    btn.classList.add('no');
+    S.sk=0;
+    updateStreak();
+    setTimeout(()=>{
+      [...document.getElementById('agd').children].forEach(b=>{if(b.textContent===q.b)b.classList.add('ok');});
+      setTimeout(()=>{
+        showMeaning(q);
+        setTimeout(()=>nextQ(),3000);
+      },1000);
+    },500);
+  }
 }
 
 function showRecordBanner(n){
@@ -233,33 +296,6 @@ function showRecordBanner(n){
   setTimeout(()=>el.classList.remove('show'),2800);
 }
 
-function pick(choice,btn){
-  if(S.ans)return;S.ans=true;const q=S.cur;
-  if(choice===q.b){
-    btn.classList.add('ok');S.sk++;S.tot++;
-    const prev=getBest();
-    if(S.sk>prev){saveBest(S.sk);showRecordBanner(S.sk);}
-    updateStreak();
-    document.getElementById('mph').innerHTML=q.f.replace(q.b,`<span class="hl">${q.b}</span>`);
-    document.getElementById('mpb').textContent=q.a;
-    document.getElementById('mpe').textContent=q.e;
-    document.getElementById('mpn').classList.add('show');
-    if(S.tot>0&&S.tot%10===0){setTimeout(()=>milestone(),2400);}
-    else{setTimeout(()=>nextQ(),2600);}
- } else {
-    btn.classList.add('no');S.sk=0;updateStreak();
-    setTimeout(()=>{
-      [...document.getElementById('agd').children].forEach(b=>{if(b.textContent===q.b)b.classList.add('ok');});
-      setTimeout(()=>{
-        document.getElementById('mph').innerHTML=q.f.replace(q.b,`<span class="hl">${q.b}</span>`);
-        document.getElementById('mpb').textContent=q.a;
-        document.getElementById('mpe').textContent=q.e;
-        document.getElementById('mpn').classList.add('show');
-        setTimeout(()=>nextQ(),3000);
-      },1000);
-    },500);
-  }
-
 function milestone(){
   const msgs=['答得好！','真厉害！','继续加油！','棒极了！','了不起！'];
   const emojis=['🎉','🌟','🏆','🎊','👏'];
@@ -268,8 +304,9 @@ function milestone(){
   document.getElementById('msM').textContent=msgs[i];
   document.getElementById('msS').textContent=`已答对 ${S.tot} 题`;
   scr('milestone');
-  setTimeout(()=>resumeGame(), 3000);
+  setTimeout(()=>resumeGame(),3000);
 }
+
 function resumeGame(){scr('game');nextQ();}
 function startGame(){buildQ();scr('game');nextQ();}
 function scr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
