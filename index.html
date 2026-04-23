@@ -218,7 +218,7 @@ input:checked+.tgtr::before{transform:translateX(28px)}
   <div class="gbt"></div><div class="gbb"></div>
   <div class="gin">
     <div class="tpb">
-      <div class="ctg" id="catTag">古诗词</div>
+      <button class="gbtn" onclick="scr('home')">🏠</button>
       <div class="skb">
         <div class="sk-main">🔥 <span id="skN">0</span></div>
         <div class="sk-best">最高 <span id="bestN">0</span></div>
@@ -249,7 +249,7 @@ input:checked+.tgtr::before{transform:translateX(28px)}
   <div class="hgbt"></div><div class="hgbb"></div>
   <div class="gin">
     <div class="tpb">
-      <div class="ctg th" id="hCatTag">中国历史</div>
+      <button class="gbtn" style="color:#f0e0c0" onclick="scr('home')">🏠</button>
       <div class="skb">
         <div class="sk-main-h">🏆 <span id="hSkN">0</span></div>
         <div class="sk-best-h">最高 <span id="hBestN">0</span></div>
@@ -380,7 +380,7 @@ function buildQ(mode){
     const cats=activeCats();
     pool=Q.filter(q=>cats.includes(q.c));
   } else {
-    pool=window.QH;
+    pool=(window.QH||[]).slice();
   }
   const d1=pool.filter(q=>q.d===1).sort(()=>Math.random()-.5);
   const d2=pool.filter(q=>q.d===2).sort(()=>Math.random()-.5);
@@ -548,6 +548,7 @@ function resumeGame(mode){
 // ── NAVIGATION ────────────────────────────────────────────────
 function startMode(mode){
   currentMode=mode;
+  if(mode==='history'&&!window.QH){alert('历史题库加载失败，请刷新页面');return;}
   buildQ(mode);
   scr(mode==='literary'?'game':'game-history');
   nextQ(mode);
