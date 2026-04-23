@@ -273,9 +273,10 @@ const Q_HISTORY=[
  ]},
 ];
 
-// Flatten variants and append to the Q array defined in data.js
+// Flatten into own global — engine reads window.QH for history mode
+window.QH = [];
 Q_HISTORY.forEach(grp=>{
   grp.v.forEach(v=>{
-    window.Q.push({c:grp.c,d:grp.d,a:grp.a,e:grp.e,i:grp.i,t:v.t,b:v.b,o:v.o});
+    window.QH.push({c:grp.c,d:grp.d,a:grp.a,e:grp.e,i:grp.i,t:v.t,b:v.b,o:v.o});
   });
 });
