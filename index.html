@@ -238,7 +238,7 @@ function render(){
   document.getElementById('gBg').style.backgroundImage=`url('${q.i}')`;
   document.getElementById('qSrc').textContent=q.a;
   const qEl=document.getElementById('qTx');
-  qEl.innerHTML=q.t.replace('，','，<br>').replace(`{${q.b}}`,`<span class="blk">&nbsp;</span>`);
+  qEl.innerHTML=q.t.replace('，','，<br>').replace(`{${q.b}}`,`<span class="blk">＿</span>`);
   qEl.classList.remove('sli');void qEl.offsetWidth;qEl.classList.add('sli');
   const grid=document.getElementById('agd');
   grid.innerHTML='';
