@@ -208,9 +208,10 @@ function buildQ(){
   const d3=pool.filter(q=>q.d===3).sort(()=>Math.random()-.5);
   // Build queue: 20 easy → mixed easy+medium → then all
   // We store as segments that get consumed in order
-  const easy30=d1.slice(0,30);
-  const rest=[...d1.slice(30),...d2,...d3].sort(()=>Math.random()-.5);
-  S.queue=[...rest,...easy30].reverse(); // reversed because we pop from end
+  const warmup=Math.min(30,Math.floor(d1.length*0.5));
+const easy30=d1.slice(0,warmup);
+const rest=[...d1.slice(warmup),...d2,...d3].sort(()=>Math.random()-.5);
+S.queue=[...rest,...easy30].reverse(); // reversed because we pop from end
   // Note: easy30 goes at END of array so they are popped FIRST
 }
 
