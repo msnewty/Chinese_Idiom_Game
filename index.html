@@ -197,8 +197,8 @@ function activeCats(){
 }
 
 // ── QUEUE BUILDER with difficulty progression ─────────────────
-// First 20 questions: difficulty 1 only
-// After 20: mix difficulty 1 & 2
+// First 30 questions: difficulty 1 only
+// After 30: mix difficulty 1 & 2
 // After 40: mix all difficulties
 function buildQ(){
   const cats=activeCats();
@@ -208,10 +208,10 @@ function buildQ(){
   const d3=pool.filter(q=>q.d===3).sort(()=>Math.random()-.5);
   // Build queue: 20 easy → mixed easy+medium → then all
   // We store as segments that get consumed in order
-  const easy20=d1.slice(0,20);
-  const rest=[...d1.slice(20),...d2,...d3].sort(()=>Math.random()-.5);
-  S.queue=[...rest,...easy20].reverse(); // reversed because we pop from end
-  // Note: easy20 goes at END of array so they are popped FIRST
+  const easy30=d1.slice(0,30);
+  const rest=[...d1.slice(30),...d2,...d3].sort(()=>Math.random()-.5);
+  S.queue=[...rest,...easy30].reverse(); // reversed because we pop from end
+  // Note: easy30 goes at END of array so they are popped FIRST
 }
 
 function nextQ(){
