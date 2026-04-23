@@ -1,4 +1,4 @@
-const Q = [
+const RAW = [
 
   // ═══════════════════════════════════════════════════════════
   // 古诗词 POEMS & CI  (difficulty: 1=easy 2=medium 3=hard)
@@ -1215,20 +1215,11 @@ const Q = [
 
 ];
 
-  // Expand: for each entry, create one Q object per variant
+const Q = (function(){
   const result = [];
-  for (const entry of raw) {
+  for (const entry of RAW) {
     for (const v of entry.v) {
-      result.push({
-        c: entry.c,
-        d: entry.d,
-        a: entry.a,
-        e: entry.e,
-        i: entry.i,
-        t: v.t,
-        b: v.b,
-        o: v.o,
-      });
+      result.push({c:entry.c, d:entry.d, a:entry.a, e:entry.e, i:entry.i, t:v.t, b:v.b, o:v.o});
     }
   }
   return result;
