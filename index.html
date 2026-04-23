@@ -86,6 +86,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--p);font-family
 .sk-best-h{font-size:calc(14px*var(--fs));color:rgba(240,192,64,.5);letter-spacing:1px}
 .gbtn{background:none;border:none;cursor:pointer;font-size:calc(26px*var(--fs));opacity:.32;padding:8px}
 .gbtn:active{opacity:.7}
+.hmbtn{opacity:.45;padding:6px}
 /* Question area */
 .qar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;text-align:center;padding:0 16px}
 .qsr{font-size:calc(20px*var(--fs));color:rgba(28,16,8,0.55);letter-spacing:4px;margin-bottom:18px}
@@ -218,7 +219,10 @@ input:checked+.tgtr::before{transform:translateX(28px)}
   <div class="gbt"></div><div class="gbb"></div>
   <div class="gin">
     <div class="tpb">
-      <button class="gbtn" onclick="scr('home')">🏠</button>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="gbtn hmbtn" onclick="scr('home')" aria-label="返回主页"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg></button>
+        <div class="ctg" id="catTag">古诗词</div>
+      </div>
       <div class="skb">
         <div class="sk-main">🔥 <span id="skN">0</span></div>
         <div class="sk-best">最高 <span id="bestN">0</span></div>
@@ -249,7 +253,10 @@ input:checked+.tgtr::before{transform:translateX(28px)}
   <div class="hgbt"></div><div class="hgbb"></div>
   <div class="gin">
     <div class="tpb">
-      <button class="gbtn" style="color:#f0e0c0" onclick="scr('home')">🏠</button>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="gbtn hmbtn" style="color:#f0e0c0" onclick="scr('home')" aria-label="返回主页"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg></button>
+        <div class="ctg th" id="hCatTag">中国历史</div>
+      </div>
       <div class="skb">
         <div class="sk-main-h">🏆 <span id="hSkN">0</span></div>
         <div class="sk-best-h">最高 <span id="hBestN">0</span></div>
