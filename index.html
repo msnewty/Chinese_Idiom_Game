@@ -208,10 +208,17 @@ function buildQ(){
   const d3=pool.filter(q=>q.d===3).sort(()=>Math.random()-.5);
   // Build queue: 20 easy → mixed easy+medium → then all
   // We store as segments that get consumed in order
-  const warmup=Math.min(30,Math.floor(d1.length*0.5));
+const warmup=Math.min(30,Math.floor(d1.length*0.5));
 const easy30=d1.slice(0,warmup);
-const rest=[...d1.slice(warmup),...d2,...d3].sort(()=>Math.random()-.5);
-S.queue=[...rest,...easy30].reverse(); // reversed because we pop from end
+const d1rest=d1.slice(warmup).sort(()=>Math.random()-.5);
+const d2shuffled=d2.sort(()=>Math.random()-.5);
+const d3shuffled=d3.sort(()=>Math.random()-.5);
+// Phase 2: mix d1 and d2 equally
+const phase2=[...d1rest,...d2shuffled].sort(()=>Math.random()-.5);
+// Phase 3: sprinkle d3 into the back half
+const half=Math.floor(phase2.length/2);
+const phase3=[...phase2.slice(0,half),...d3shuffled,...phase2.slice(half)];
+S.queue=[...phase3,...easy30].reverse(); // reversed because we pop from end
   // Note: easy30 goes at END of array so they are popped FIRST
 }
 
