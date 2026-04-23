@@ -297,6 +297,7 @@ function showRecordBanner(n){
   setTimeout(()=>el.classList.remove('show'),2800);
 }
 
+let milestoneTimer=null;
 function milestone(){
   const msgs=['答得好！','真厉害！','继续加油！','棒极了！','了不起！'];
   const emojis=['🎉','🌟','🏆','🎊','👏'];
@@ -305,10 +306,13 @@ function milestone(){
   document.getElementById('msM').textContent=msgs[i];
   document.getElementById('msS').textContent=`已答对 ${S.tot} 题`;
   scr('milestone');
-  setTimeout(()=>resumeGame(),3000);
+  milestoneTimer=setTimeout(()=>resumeGame(),3000);
 }
-
-function resumeGame(){scr('game');nextQ();}
+function resumeGame(){
+  if(milestoneTimer){clearTimeout(milestoneTimer);milestoneTimer=null;}
+  scr('game');
+  nextQ();
+}
 function startGame(){buildQ();scr('game');nextQ();}
 function scr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function showSettings(from){S.from=from;document.getElementById('bkBtn').textContent=from==='home'?'← 返回':'← 返回游戏';loadS();scr('settings');}
