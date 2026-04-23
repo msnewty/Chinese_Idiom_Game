@@ -1,281 +1,588 @@
-const Q_HISTORY=[
-// ── HISTORY ────────────────────────────────────────────────────────────────
-// People & Roles
-{c:"历史",d:1,a:"秦朝历史",e:"秦始皇嬴政统一六国，建立了中国历史上第一个统一的封建王朝——秦朝",
- i:"https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&q=70",
- v:[
-   {t:"中国历史上第一位皇帝是{秦始皇}",b:"秦始皇",o:["秦始皇","汉高祖","唐太宗","周武王"]},
- ]},
-{c:"历史",d:1,a:"汉朝历史",e:"张骞两次出使西域，打通了丝绸之路，促进了中西方的文化与贸易交流",
- i:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=70",
- v:[
-   {t:"汉武帝派{张骞}出使西域，开辟了丝绸之路",b:"张骞",o:["张骞","班超","苏武","卫青"]},
- ]},
-{c:"历史",d:1,a:"唐朝历史",e:"玄奘法师西行取经，历经十七年，带回大量佛经，后来被写成《西游记》的原型故事",
- i:"https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=800&q=70",
- v:[
-   {t:"唐朝高僧{玄奘}西天取经，带回大量佛教经典",b:"玄奘",o:["玄奘","鉴真","慧能","法显"]},
- ]},
-{c:"历史",d:1,a:"明朝历史",e:"郑和七次下西洋，最远到达非洲东海岸，是中国古代规模最大的航海活动",
- i:"https://images.unsplash.com/photo-1569974498991-d3ec1001a7e0?w=800&q=70",
- v:[
-   {t:"明朝{郑和}七下西洋，到达非洲东海岸",b:"郑和",o:["郑和","戚继光","郑成功","徐福"]},
- ]},
-{c:"历史",d:1,a:"清朝历史",e:"清朝最后一位皇帝溥仪，六岁登基，辛亥革命后退位，是中国最后一位皇帝",
- i:"https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=70",
- v:[
-   {t:"清朝最后一位皇帝是{溥仪}",b:"溥仪",o:["溥仪","光绪","同治","宣统"]},
- ]},
-{c:"历史",d:1,a:"三国历史",e:"诸葛亮是刘备的军师，足智多谋，辅佐刘备建立蜀汉，留下了"鞠躬尽瘁，死而后已"的名言",
- i:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=70",
- v:[
-   {t:"三国时期，{诸葛亮}是蜀汉的丞相，以智慧著称",b:"诸葛亮",o:["诸葛亮","司马懿","周瑜","曹操"]},
- ]},
-{c:"历史",d:1,a:"唐朝历史",e:"李白是唐朝最伟大的诗人之一，被后人称为"诗仙"，留下了无数流传千古的诗篇",
- i:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=70",
- v:[
-   {t:"唐朝大诗人{李白}被称为"诗仙"",b:"李白",o:["李白","杜甫","白居易","王维"]},
- ]},
-{c:"历史",d:1,a:"近代历史",e:"孙中山领导辛亥革命，推翻了清朝统治，结束了中国两千多年的封建帝制，建立中华民国",
- i:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=70",
- v:[
-   {t:"辛亥革命的领导人是{孙中山}",b:"孙中山",o:["孙中山","袁世凯","黎元洪","蒋介石"]},
- ]},
-// Cause & Effect
-{c:"历史",d:1,a:"三国历史",e:"赤壁之战中，孙刘联军用火攻大败曹操，曹操统一天下的计划就此失败，三国鼎立格局形成",
- i:"https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=70",
- v:[
-   {t:"赤壁之战后，{曹操}的统一大业宣告失败",b:"曹操",o:["曹操","袁绍","刘表","孙权"]},
- ]},
-{c:"历史",d:2,a:"秦朝历史",e:"陈胜吴广在大泽乡起义，是中国历史上第一次大规模农民起义，动摇了秦朝的统治基础",
- i:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=70",
- v:[
-   {t:"秦末{陈胜}吴广在大泽乡发动了中国第一次农民起义",b:"陈胜",o:["陈胜","项羽","刘邦","韩信"]},
- ]},
-{c:"历史",d:2,a:"唐朝历史",e:"安史之乱是唐朝由盛转衰的转折点，历时八年，对唐朝造成了严重的打击",
- i:"https://images.unsplash.com/photo-1454789415558-bdda08f4eabb?w=800&q=70",
- v:[
-   {t:"安史之乱后，唐朝从鼎盛走向了{衰落}",b:"衰落",o:["衰落","灭亡","分裂","统一"]},
- ]},
-{c:"历史",d:2,a:"汉朝历史",e:"霍去病是西汉著名的军事将领，多次出击匈奴，为汉朝的稳定立下了赫赫战功",
- i:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=70",
- v:[
-   {t:"汉朝名将{霍去病}多次击败匈奴，保卫了边疆",b:"霍去病",o:["霍去病","卫青","李广","班超"]},
- ]},
-{c:"历史",d:2,a:"宋朝历史",e:"岳飞是南宋的抗金英雄，精忠报国，后来被秦桧以"莫须有"的罪名陷害致死",
- i:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=70",
- v:[
-   {t:"南宋抗金英雄{岳飞}以"精忠报国"著称",b:"岳飞",o:["岳飞","文天祥","辛弃疾","韩世忠"]},
- ]},
-// Dynasty Facts
-{c:"历史",d:1,a:"唐朝历史",e:"唐朝是中国历史上最繁盛的朝代之一，首都在长安，即今天的西安",
- i:"https://images.unsplash.com/photo-1527576539890-dfa815648363?w=800&q=70",
- v:[
-   {t:"唐朝的都城是{长安}",b:"长安",o:["长安","洛阳","南京","北京"]},
- ]},
-{c:"历史",d:1,a:"元朝历史",e:"忽必烈是蒙古帝国的大汗，建立了元朝，定都大都，即今天的北京",
- i:"https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=70",
- v:[
-   {t:"元朝的建立者是{忽必烈}",b:"忽必烈",o:["忽必烈","成吉思汗","窝阔台","铁木真"]},
- ]},
-{c:"历史",d:1,a:"明朝历史",e:"明朝由朱元璋建立，他出身贫苦，参加农民起义，最终推翻元朝，建立明朝",
- i:"https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&q=70",
- v:[
-   {t:"明朝的开国皇帝是{朱元璋}",b:"朱元璋",o:["朱元璋","朱棣","朱允炆","朱标"]},
- ]},
-{c:"历史",d:1,a:"清朝历史",e:"清朝的第一位皇帝是顺治帝，清军入关后他在北京即位，开创了清朝的统治",
- i:"https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=70",
- v:[
-   {t:"清朝入关后的第一位皇帝是{顺治}",b:"顺治",o:["顺治","康熙","雍正","皇太极"]},
- ]},
-{c:"历史",d:2,a:"汉朝历史",e:"汉朝分为西汉和东汉，西汉的首都在长安，东汉的首都迁到了洛阳",
- i:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=70",
- v:[
-   {t:"东汉的都城是{洛阳}",b:"洛阳",o:["洛阳","长安","开封","南京"]},
- ]},
-{c:"历史",d:2,a:"宋朝历史",e:"北宋的首都在开封，又叫汴京，后来被金国攻破，宋朝被迫南迁，建立南宋",
- i:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=70",
- v:[
-   {t:"北宋的都城是{开封}",b:"开封",o:["开封","洛阳","杭州","南京"]},
- ]},
-{c:"历史",d:2,a:"秦朝历史",e:"秦始皇统一六国后，统一了文字、货币和度量衡，对中国历史的发展产生了深远影响",
- i:"https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&q=70",
- v:[
-   {t:"秦始皇统一中国后，统一了全国的{文字}和货币",b:"文字",o:["文字","语言","军队","礼仪"]},
- ]},
-{c:"历史",d:1,a:"唐朝历史",e:"唐太宗李世民开创了"贞观之治"，是中国历史上著名的盛世，国力强盛，万邦来朝",
- i:"https://images.unsplash.com/photo-1527576539890-dfa815648363?w=800&q=70",
- v:[
-   {t:"唐太宗{李世民}开创了"贞观之治"",b:"李世民",o:["李世民","李渊","李隆基","李治"]},
- ]},
-{c:"历史",d:2,a:"清朝历史",e:"康乾盛世是清朝最鼎盛的时期，历经康熙、雍正、乾隆三朝，国力达到顶峰",
- i:"https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=70",
- v:[
-   {t:"清朝"康乾盛世"经历了康熙、雍正、{乾隆}三位皇帝",b:"乾隆",o:["乾隆","嘉庆","道光","同治"]},
- ]},
-// Historical Figures & Identity
-{c:"历史",d:1,a:"唐朝历史",e:"武则天是中国历史上唯一的女皇帝，她掌权50年，国力强盛，被后世称为"政启开元，治宏贞观"",
- i:"https://images.unsplash.com/photo-1527576539890-dfa815648363?w=800&q=70",
- v:[
-   {t:"中国历史上唯一的女皇帝是{武则天}",b:"武则天",o:["武则天","慈禧太后","吕后","孝庄皇后"]},
- ]},
-{c:"历史",d:1,a:"春秋历史",e:"孔子是儒家学说的创始人，被后世尊称为"至圣先师"，其思想影响中国两千多年",
- i:"https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=800&q=70",
- v:[
-   {t:"儒家学说的创始人是{孔子}",b:"孔子",o:["孔子","孟子","荀子","老子"]},
- ]},
-{c:"历史",d:1,a:"战国历史",e:"屈原是战国时期楚国的爱国诗人，在楚国灭亡后投汨罗江而死，后人以端午节纪念他",
- i:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=70",
- v:[
-   {t:"端午节是为了纪念爱国诗人{屈原}",b:"屈原",o:["屈原","伍子胥","介子推","伯夷"]},
- ]},
-{c:"历史",d:2,a:"汉朝历史",e:"司马迁是汉朝伟大的历史学家，虽身受宫刑，仍坚持写完《史记》，记录了从黄帝到汉武帝的历史",
- i:"https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=800&q=70",
- v:[
-   {t:"《史记》的作者是汉朝史学家{司马迁}",b:"司马迁",o:["司马迁","司马光","班固","刘向"]},
- ]},
-{c:"历史",d:2,a:"宋朝历史",e:"苏东坡是宋朝著名的文学家、书画家，诗词文章样样出色，被誉为"千古第一文人"",
- i:"https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?w=800&q=70",
- v:[
-   {t:"宋朝大文豪{苏东坡}诗词书画样样精通",b:"苏东坡",o:["苏东坡","欧阳修","王安石","辛弃疾"]},
- ]},
-{c:"历史",d:1,a:"春秋历史",e:"孙子是春秋时期著名的军事家，著有《孙子兵法》，是世界上最早的军事著作",
- i:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=70",
- v:[
-   {t:"《孙子兵法》的作者是{孙子}",b:"孙子",o:["孙子","孙膑","吴起","白起"]},
- ]},
-{c:"历史",d:2,a:"明朝历史",e:"李时珍是明朝著名的医学家，历时27年写成《本草纲目》，记录了近1900种药材",
- i:"https://images.unsplash.com/photo-1495592822108-9e6261896da8?w=800&q=70",
- v:[
-   {t:"明朝医学家{李时珍}写成了《本草纲目》",b:"李时珍",o:["李时珍","华佗","扁鹊","张仲景"]},
- ]},
-{c:"历史",d:1,a:"三国历史",e:"关羽是三国时期蜀汉的名将，以忠义著称，后来被民间奉为"武圣"，与文圣孔子并列",
- i:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=70",
- v:[
-   {t:"三国名将{关羽}被后人尊称为"武圣"",b:"关羽",o:["关羽","张飞","赵云","马超"]},
- ]},
-{c:"历史",d:2,a:"战国历史",e:"蔺相如以"完璧归赵"和"负荆请罪"的故事著称，体现了他的智慧与大度",
- i:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=70",
- v:[
-   {t:""完璧归赵"的主角是战国时期赵国的{蔺相如}",b:"蔺相如",o:["蔺相如","廉颇","蔺且","赵括"]},
- ]},
-{c:"历史",d:2,a:"汉朝历史",e:"班昭是东汉著名的女历史学家，协助哥哥班固完成了《汉书》，是中国古代著名的才女",
- i:"https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?w=800&q=70",
- v:[
-   {t:"东汉才女{班昭}协助完成了历史巨著《汉书》",b:"班昭",o:["班昭","蔡文姬","卫子夫","王昭君"]},
- ]},
-{c:"历史",d:1,a:"近代历史",e:"鲁迅是中国近代著名的文学家和思想家，被称为"中国现代文学之父"，代表作有《阿Q正传》",
- i:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=70",
- v:[
-   {t:"被称为"现代文学之父"的是{鲁迅}",b:"鲁迅",o:["鲁迅","巴金","老舍","茅盾"]},
- ]},
-// More People & Roles
-{c:"历史",d:2,a:"春秋历史",e:"越王勾践卧薪尝胆，忍辱负重，经过十年努力，最终灭掉吴国，成为春秋时期的霸主",
- i:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=70",
- v:[
-   {t:""卧薪尝胆"讲的是{越王勾践}的故事",b:"越王勾践",o:["越王勾践","吴王夫差","楚庄王","齐桓公"]},
- ]},
-{c:"历史",d:2,a:"秦朝历史",e:"李斯是秦朝的丞相，协助秦始皇统一六国，统一文字，制定法律，是秦朝最重要的政治家之一",
- i:"https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&q=70",
- v:[
-   {t:"秦始皇的丞相是{李斯}",b:"李斯",o:["李斯","王翦","蒙恬","赵高"]},
- ]},
-{c:"历史",d:1,a:"汉朝历史",e:"刘邦是汉朝的开国皇帝，从一个亭长起兵，打败项羽，建立了大汉王朝，史称汉高祖",
- i:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=70",
- v:[
-   {t:"汉朝的开国皇帝是{刘邦}",b:"刘邦",o:["刘邦","项羽","刘秀","刘备"]},
- ]},
-{c:"历史",d:2,a:"战国历史",e:"商鞅在秦国推行变法，奖励耕战，统一度量衡，使秦国迅速强大，为日后统一六国奠定基础",
- i:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=70",
- v:[
-   {t:"战国时期在秦国推行变法的是{商鞅}",b:"商鞅",o:["商鞅","管仲","吴起","李悝"]},
- ]},
-{c:"历史",d:3,a:"汉朝历史",e:"王昭君是西汉四大美女之一，她远嫁匈奴单于，为汉朝与匈奴的和平做出了巨大贡献",
- i:"https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?w=800&q=70",
- v:[
-   {t:"出塞和亲的美女是{王昭君}",b:"王昭君",o:["王昭君","西施","貂蝉","杨贵妃"]},
- ]},
-{c:"历史",d:3,a:"清朝历史",e:"林则徐在1839年主持虎门销烟，将英国商人的鸦片全部销毁，是中国近代史上著名的爱国行动",
- i:"https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=70",
- v:[
-   {t:"1839年主持虎门销烟的官员是{林则徐}",b:"林则徐",o:["林则徐","左宗棠","曾国藩","李鸿章"]},
- ]},
-{c:"历史",d:2,a:"唐朝历史",e:"鉴真是唐朝著名的高僧，六次东渡日本，传播佛法和中国文化，为中日文化交流作出了重要贡献",
- i:"https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=800&q=70",
- v:[
-   {t:"唐朝高僧{鉴真}六次东渡日本，传播中国文化",b:"鉴真",o:["鉴真","玄奘","慧能","法显"]},
- ]},
-{c:"历史",d:1,a:"明朝历史",e:"戚继光是明朝著名的军事将领，他训练"戚家军"，多次打败倭寇，保卫了中国的海疆",
- i:"https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&q=70",
- v:[
-   {t:"明朝抗击倭寇的名将是{戚继光}",b:"戚继光",o:["戚继光","郑成功","俞大猷","卢象升"]},
- ]},
-{c:"历史",d:2,a:"春秋历史",e:"管仲是春秋时期齐国的名相，辅佐齐桓公成为第一位霸主，是中国历史上著名的政治家和经济学家",
- i:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=70",
- v:[
-   {t:"辅佐齐桓公称霸的名相是{管仲}",b:"管仲",o:["管仲","晏婴","鲍叔牙","子产"]},
- ]},
-{c:"历史",d:3,a:"汉朝历史",e:"张仲景是东汉著名的医学家，著有《伤寒杂病论》，被后人尊称为"医圣"",
- i:"https://images.unsplash.com/photo-1495592822108-9e6261896da8?w=800&q=70",
- v:[
-   {t:"被尊为"医圣"的东汉医学家是{张仲景}",b:"张仲景",o:["张仲景","华佗","扁鹊","李时珍"]},
- ]},
-{c:"历史",d:2,a:"明朝历史",e:"徐光启是明朝著名的科学家，他引进了西方科学技术，翻译了《几何原本》，是中西文化交流的先驱",
- i:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=70",
- v:[
-   {t:"明朝翻译《几何原本》的科学家是{徐光启}",b:"徐光启",o:["徐光启","宋应星","方以智","李之藻"]},
- ]},
-{c:"历史",d:1,a:"近代历史",e:"詹天佑是中国近代著名的铁路工程师，他主持修建了中国第一条自主设计的铁路——京张铁路",
- i:"https://images.unsplash.com/photo-1476611338391-6f395a0ebc7b?w=800&q=70",
- v:[
-   {t:"主持修建京张铁路的工程师是{詹天佑}",b:"詹天佑",o:["詹天佑","茅以升","李四光","侯德榜"]},
- ]},
-// More Dynasty Facts
-{c:"历史",d:1,a:"中国历史",e:"中国历史上存在时间最长的朝代是周朝，前后共存在了约800年",
- i:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=70",
- v:[
-   {t:"中国历史上存在时间最长的朝代是{周朝}",b:"周朝",o:["周朝","汉朝","唐朝","宋朝"]},
- ]},
-{c:"历史",d:2,a:"战国历史",e:"战国时期有七个强大的诸侯国，称为战国七雄：秦、齐、楚、燕、赵、魏、韩",
- i:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=70",
- v:[
-   {t:"战国七雄中最终统一六国的是{秦国}",b:"秦国",o:["秦国","楚国","齐国","赵国"]},
- ]},
-{c:"历史",d:3,a:"汉朝历史",e:"蔡伦是东汉时期的官员，他改进了造纸术，使纸张更加便宜耐用，推动了人类文明的进步",
- i:"https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=800&q=70",
- v:[
-   {t:"东汉时期改进造纸术的发明家是{蔡伦}",b:"蔡伦",o:["蔡伦","毕昇","沈括","张衡"]},
- ]},
-{c:"历史",d:2,a:"宋朝历史",e:"四大发明是中国古代对世界文明贡献最大的四项发明：造纸术、印刷术、火药和指南针",
- i:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=70",
- v:[
-   {t:"中国古代四大发明不包括{青铜器}",b:"青铜器",o:["青铜器","火药","指南针","印刷术"]},
- ]},
-{c:"历史",d:1,a:"明朝历史",e:"故宫又称紫禁城，是明清两朝的皇宫，位于北京中心，是世界上保存最完好的古代宫殿建筑群",
- i:"https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=70",
- v:[
-   {t:"故宫（紫禁城）是{明朝}开始修建的皇宫",b:"明朝",o:["明朝","唐朝","宋朝","元朝"]},
- ]},
-{c:"历史",d:3,a:"汉朝历史",e:"张骞两次出使西域后，开辟了丝绸之路，从此中国的丝绸、瓷器、茶叶等商品大量输出西方",
- i:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=70",
- v:[
-   {t:"丝绸之路是汉朝{张骞}出使西域后逐渐形成的贸易通道",b:"张骞",o:["张骞","班超","卫青","苏武"]},
- ]},
-{c:"历史",d:2,a:"近代历史",e:"1911年武昌起义爆发，引发了辛亥革命，推翻了清朝统治，结束了中国两千多年的封建帝制",
- i:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=70",
- v:[
-   {t:"辛亥革命爆发于{1911}年",b:"1911",o:["1911","1912","1919","1905"]},
- ]},
-{c:"历史",d:1,a:"唐朝历史",e:"唐玄宗与杨贵妃的爱情故事是中国历史上最著名的爱情故事之一，白居易的《长恨歌》就是描写他们的",
- i:"https://images.unsplash.com/photo-1527576539890-dfa815648363?w=800&q=70",
- v:[
-   {t:"唐玄宗最宠爱的妃子是{杨贵妃}",b:"杨贵妃",o:["杨贵妃","武则天","王昭君","西施"]},
- ]},
-];
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#f2e8d5"/>
+<title>猜字乐</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --fs:1;
+  /* Literary palette */
+  --p:#f2e8d5;--p2:#e8d9bc;--ink:#1c1008;--im:rgba(28,16,8,0.42);
+  --red:#8b1a1a;--rs:#f5e0e0;--grn:#1a4a2e;--gs:#dff0e8;--gld:#7a5c10;--gl:#f5ead0;
+  --bd:rgba(28,16,8,0.13);--sh:rgba(28,16,8,0.09);--r:14px;
+  /* History / Imperial palette */
+  --him:#1a0a00;--hbg:#1c0a04;--hbg2:#2d1206;
+  --hred:#c0392b;--hred2:#e74c3c;--hgld:#d4a017;--hgld2:#f0c040;
+  --hpaper:#2a1206;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--p);font-family:'Noto Serif SC',serif;touch-action:manipulation}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+.screen.active{opacity:1;pointer-events:all}
 
-// Flatten variants and append to the Q array defined in data.js
-Q_HISTORY.forEach(grp=>{
-  grp.v.forEach(v=>{
-    Q.push({c:grp.c,d:grp.d,a:grp.a,e:grp.e,i:grp.i,t:v.t,b:v.b,o:v.o});
-  });
-});
+/* ── HOME ──────────────────────────────────────────────── */
+#home{background:var(--p)}
+.hst,.hsb{position:absolute;left:0;right:0;height:7px;background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 20px,transparent 20px,transparent 30px)}
+.hst{top:0}.hsb{bottom:0}
+.htl-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:calc(32px*var(--fs))}
+.htl{font-family:'Ma Shan Zheng',cursive;font-size:calc(76px*var(--fs));color:var(--ink);letter-spacing:10px;line-height:1}
+.hrl{width:64px;height:2px;background:var(--red);margin:12px auto}
+.hsu{font-size:calc(16px*var(--fs));color:var(--im);letter-spacing:5px}
+/* Two mode cards on home — side by side */
+.home-cards{display:flex;flex-direction:row;gap:16px;width:min(92vw,500px)}
+.mode-card{border-radius:14px;padding:calc(24px*var(--fs)) calc(12px*var(--fs));cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;overflow:hidden;border:none;flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.mode-card:active{transform:scale(.97)}
+.mode-card-literary{background:var(--p2);border:1.5px solid rgba(28,16,8,.18);box-shadow:0 4px 24px rgba(28,16,8,.12)}
+.mode-card-history{background:linear-gradient(155deg,#2d1206 0%,#1a0a04 100%);border:1.5px solid #7a3a10;box-shadow:0 4px 28px rgba(192,57,43,.22)}
+.mode-card-history::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(212,160,23,.04) 18px,rgba(212,160,23,.04) 19px);pointer-events:none}
+.mc-icon{font-size:calc(52px*var(--fs));flex-shrink:0}
+.mc-text{display:flex;flex-direction:column;gap:6px;position:relative;z-index:1}
+.mc-title{font-family:'Ma Shan Zheng',cursive;letter-spacing:4px;line-height:1.2}
+.mc-sub{letter-spacing:1px;line-height:1.5}
+.mode-card-literary .mc-title{font-size:calc(28px*var(--fs));color:var(--ink)}
+.mode-card-literary .mc-sub{font-size:calc(13px*var(--fs));color:var(--im)}
+.mode-card-history .mc-title{font-size:calc(28px*var(--fs));color:var(--hgld2)}
+.mode-card-history .mc-sub{font-size:calc(13px*var(--fs));color:rgba(240,192,64,.6)}
+.home-settings{font-size:calc(16px*var(--fs));color:var(--im);cursor:pointer;letter-spacing:3px;padding:14px;margin-top:4px;text-align:center}
+
+/* ── GAME (LITERARY) ────────────────────────────────────── */
+#game{background:var(--p);justify-content:flex-start}
+.gib{position:absolute;inset:0;background-size:cover;background-position:center;background-color:#c8b89a;opacity:.09;filter:sepia(70%) saturate(.5);transition:background-image .6s}
+.gvg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,rgba(242,232,213,.72) 100%)}
+.gln{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(90deg,rgba(28,16,8,.035) 0,rgba(28,16,8,.035) 1px,transparent 1px,transparent 55px)}
+.gbt,.gbb{position:absolute;left:0;right:0;height:4px;background:rgba(28,16,8,.12)}
+.gbt{top:0}.gbb{bottom:0}
+
+/* ── GAME (HISTORY) ─────────────────────────────────────── */
+#game-history{background:var(--hbg);justify-content:flex-start}
+.hgib{position:absolute;inset:0;background-size:cover;background-position:center;background-color:#1c0a04;opacity:.14;filter:sepia(100%) saturate(.6) hue-rotate(330deg);transition:background-image .6s}
+.hgvg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(26,10,4,.82) 100%)}
+/* Dragon scale pattern overlay */
+.hgpat{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(30deg,transparent,transparent 22px,rgba(212,160,23,.04) 22px,rgba(212,160,23,.04) 23px),repeating-linear-gradient(150deg,transparent,transparent 22px,rgba(212,160,23,.03) 22px,rgba(212,160,23,.03) 23px)}
+.hgbt,.hgbb{position:absolute;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--hgld),transparent)}
+.hgbt{top:0}.hgbb{bottom:0}
+/* Corner ornaments */
+#game-history::before,#game-history::after{content:'❖';position:absolute;font-size:22px;color:rgba(212,160,23,.3);z-index:3}
+#game-history::before{top:12px;left:14px}
+#game-history::after{top:12px;right:14px}
+
+/* ── SHARED GAME INNER ───────────────────────────────────── */
+.gin{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 24px 24px}
+.tpb{width:100%;display:flex;align-items:center;justify-content:space-between}
+/* Literary category tags */
+.ctg{font-size:calc(20px*var(--fs));font-weight:700;letter-spacing:3px;padding:6px 16px;border-radius:3px;border:1.5px solid currentColor}
+.tp{color:var(--grn);background:var(--gs)}.ti{color:var(--red);background:var(--rs)}.tv{color:var(--gld);background:var(--gl)}
+/* History category tag */
+.th{color:var(--hgld2);background:rgba(212,160,23,.15);border-color:var(--hgld)}
+/* Streak */
+.skb{display:flex;flex-direction:column;align-items:center;gap:2px}
+.sk-main{display:flex;align-items:center;gap:7px;font-size:calc(22px*var(--fs));font-weight:700;color:var(--ink)}
+.sk-main-h{display:flex;align-items:center;gap:7px;font-size:calc(22px*var(--fs));font-weight:700;color:var(--hgld2)}
+.sk-best{font-size:calc(14px*var(--fs));color:var(--im);letter-spacing:1px}
+.sk-best-h{font-size:calc(14px*var(--fs));color:rgba(240,192,64,.5);letter-spacing:1px}
+.gbtn{background:none;border:none;cursor:pointer;font-size:calc(26px*var(--fs));opacity:.32;padding:8px}
+.gbtn:active{opacity:.7}
+/* Question area */
+.qar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;text-align:center;padding:0 16px}
+.qsr{font-size:calc(20px*var(--fs));color:rgba(28,16,8,0.55);letter-spacing:4px;margin-bottom:18px}
+.qsr-h{font-size:calc(20px*var(--fs));color:rgba(240,192,64,.55);letter-spacing:4px;margin-bottom:18px}
+.qtx{font-family:'Ma Shan Zheng',cursive;font-size:calc(50px*var(--fs));color:var(--ink);line-height:1.65;letter-spacing:5px}
+.qtx-h{font-family:'Ma Shan Zheng',cursive;font-size:calc(46px*var(--fs));color:#f0e0c0;line-height:1.65;letter-spacing:4px}
+.blk{display:inline-block;color:var(--red);min-width:calc(54px*var(--fs));text-align:center}
+.blk-h{display:inline-block;color:var(--hgld2);min-width:calc(54px*var(--fs));text-align:center;border-bottom:2px solid rgba(212,160,23,.5)}
+/* Answer grid */
+.agd{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:13px;max-width:700px}
+/* Literary answer buttons */
+.abt{background:rgba(255,255,255,.88);border:1.5px solid var(--bd);border-radius:var(--r);font-family:'Ma Shan Zheng',cursive;font-size:calc(50px*var(--fs));color:var(--ink);padding:calc(14px*var(--fs)) 10px;cursor:pointer;box-shadow:0 2px 10px var(--sh);transition:transform .1s;min-height:calc(86px*var(--fs));display:flex;align-items:center;justify-content:center}
+.abt:active{transform:scale(.95)}
+.abt.ok{background:var(--gs);border-color:var(--grn);color:var(--grn);animation:pop .35s ease}
+.abt.no{background:var(--rs);border-color:var(--red);color:var(--red);animation:shk .4s ease}
+/* History answer buttons */
+.abt-h{background:rgba(45,18,6,.85);border:1.5px solid rgba(212,160,23,.35);border-radius:var(--r);font-family:'Ma Shan Zheng',cursive;font-size:calc(44px*var(--fs));color:#f0e0c0;padding:calc(14px*var(--fs)) 10px;cursor:pointer;box-shadow:0 2px 14px rgba(0,0,0,.4);transition:transform .1s;min-height:calc(86px*var(--fs));display:flex;align-items:center;justify-content:center}
+.abt-h:active{transform:scale(.95)}
+.abt-h.ok{background:rgba(30,70,30,.85);border-color:#4caf50;color:#81c784;animation:pop .35s ease}
+.abt-h.no{background:rgba(80,15,15,.85);border-color:var(--hred2);color:var(--hred2);animation:shk .4s ease}
+
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+
+/* ── MEANING PANEL ──────────────────────────────────────── */
+.mpn{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 36px;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.mpn.show{opacity:1;pointer-events:all}
+/* Literary meaning panel */
+.mpn-lit{background:rgba(20,10,4,.87)}
+/* History meaning panel */
+.mpn-his{background:rgba(10,4,2,.92);border-top:2px solid rgba(212,160,23,.3);border-bottom:2px solid rgba(212,160,23,.3)}
+.mpt{font-size:calc(54px*var(--fs));margin-bottom:18px}
+.mph{font-family:'Ma Shan Zheng',cursive;font-size:calc(38px*var(--fs));color:var(--p2);letter-spacing:5px;line-height:1.65;margin-bottom:14px}
+.mph .hl{color:#e8c46a}
+.mph-h{font-family:'Ma Shan Zheng',cursive;font-size:calc(36px*var(--fs));color:#f0e0c0;letter-spacing:4px;line-height:1.65;margin-bottom:14px}
+.mph-h .hl{color:var(--hgld2)}
+.mpb{font-size:calc(18px*var(--fs));color:rgba(242,232,213,.42);letter-spacing:3px;margin-bottom:20px}
+.mpb-h{font-size:calc(18px*var(--fs));color:rgba(212,160,23,.45);letter-spacing:3px;margin-bottom:20px}
+.mpe{font-size:calc(22px*var(--fs));color:rgba(242,232,213,.82);line-height:1.65;max-width:520px}
+.mpe-h{font-size:calc(21px*var(--fs));color:rgba(240,224,192,.8);line-height:1.65;max-width:520px}
+
+/* ── RECORD BANNER ──────────────────────────────────────── */
+.rec{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:20;font-family:'Ma Shan Zheng',cursive;font-size:calc(26px*var(--fs));padding:12px 28px;border-radius:40px;letter-spacing:3px;opacity:0;pointer-events:none;transition:opacity .4s;white-space:nowrap}
+.rec-lit{background:var(--ink);color:#e8c46a}
+.rec-his{background:linear-gradient(90deg,#2d1206,#3d1a08);color:var(--hgld2);border:1px solid rgba(212,160,23,.4)}
+.rec.show{opacity:1}
+
+/* ── MILESTONE ──────────────────────────────────────────── */
+#milestone{background:var(--p)}
+#milestone-history{background:var(--hbg)}
+#milestone-history::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(212,160,23,.03) 30px,rgba(212,160,23,.03) 31px)}
+.msc{background:var(--p2);border:1.5px solid rgba(28,16,8,.18);border-radius:3px;padding:calc(38px*var(--fs)) calc(56px*var(--fs));text-align:center;box-shadow:0 6px 40px rgba(28,16,8,.12);position:relative;z-index:1}
+.msc-h{background:linear-gradient(135deg,#2d1206,#1a0a04);border:1.5px solid rgba(212,160,23,.35);border-radius:3px;padding:calc(38px*var(--fs)) calc(56px*var(--fs));text-align:center;box-shadow:0 6px 40px rgba(192,57,43,.2);position:relative;z-index:1}
+.msc-h::before,.msc-h::after{content:'─── ◆ ───';display:block;color:rgba(212,160,23,.4);font-size:16px;letter-spacing:4px}
+.mse{font-size:calc(78px*var(--fs));margin-bottom:14px;animation:bob 1.2s ease infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.msm{font-family:'Ma Shan Zheng',cursive;font-size:calc(54px*var(--fs));color:var(--ink);letter-spacing:6px;margin-bottom:8px}
+.msm-h{font-family:'Ma Shan Zheng',cursive;font-size:calc(54px*var(--fs));color:var(--hgld2);letter-spacing:6px;margin-bottom:8px}
+.mss{font-size:calc(20px*var(--fs));color:var(--im);letter-spacing:2px;margin-bottom:38px}
+.mss-h{font-size:calc(20px*var(--fs));color:rgba(212,160,23,.6);letter-spacing:2px;margin-bottom:38px}
+.msg{background:var(--ink);color:var(--p);border:none;border-radius:3px;font-family:'Ma Shan Zheng',cursive;font-size:calc(28px*var(--fs));padding:calc(14px*var(--fs)) calc(54px*var(--fs));cursor:pointer;letter-spacing:4px}
+.msg-h{background:linear-gradient(90deg,#8b2000,#c0392b);color:#f0e0c0;border:1.5px solid rgba(212,160,23,.4);border-radius:3px;font-family:'Ma Shan Zheng',cursive;font-size:calc(28px*var(--fs));padding:calc(14px*var(--fs)) calc(54px*var(--fs));cursor:pointer;letter-spacing:4px}
+
+/* ── SETTINGS ───────────────────────────────────────────── */
+#settings{background:var(--p);justify-content:flex-start;align-items:flex-start;padding:36px 28px;overflow-y:auto}
+.shd{width:100%;display:flex;align-items:center;gap:14px;margin-bottom:34px}
+.bk{background:none;border:none;font-size:calc(28px*var(--fs));cursor:pointer;color:var(--ink);padding:8px 8px 8px 0}
+.stl{font-family:'Ma Shan Zheng',cursive;font-size:calc(38px*var(--fs));color:var(--ink);letter-spacing:5px}
+.sbl{width:100%;margin-bottom:30px}
+.slb{font-size:calc(18px*var(--fs));color:var(--im);letter-spacing:3px;margin-bottom:14px}
+.fpr{font-family:'Ma Shan Zheng',cursive;font-size:calc(50px*var(--fs));color:var(--ink);text-align:center;margin-bottom:18px;letter-spacing:5px}
+.slr{display:flex;align-items:center;gap:14px}
+.fsl{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:var(--p2);outline:none;border:1px solid var(--bd)}
+.fsl::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:var(--ink);cursor:pointer}
+.tgl{display:flex;flex-direction:column;gap:12px}
+.tgr{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.7);border-radius:var(--r);padding:calc(13px*var(--fs)) calc(18px*var(--fs));border:1.5px solid var(--bd)}
+.tgn{font-size:calc(22px*var(--fs));color:var(--ink);letter-spacing:2px}
+.tgsw{position:relative;width:60px;height:32px}
+.tgsw input{opacity:0;width:0;height:0}
+.tgtr{position:absolute;inset:0;background:#ccc;border-radius:32px;cursor:pointer;transition:background .2s}
+.tgtr::before{content:'';position:absolute;width:24px;height:24px;left:4px;top:4px;border-radius:50%;background:white;transition:transform .2s}
+input:checked+.tgtr{background:var(--ink)}
+input:checked+.tgtr::before{transform:translateX(28px)}
+.rsb{width:100%;background:none;border:1.5px solid var(--bd);border-radius:var(--r);font-family:'Noto Serif SC',serif;font-size:calc(20px*var(--fs));color:var(--im);padding:14px;cursor:pointer;letter-spacing:2px}
+/* Category toggles hidden in history settings */
+.cats-section{display:block}
+.cats-section.hidden{display:none}
+.sli{animation:sli .3s ease forwards}
+@keyframes sli{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║          HOME SCREEN         ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div id="home" class="screen active">
+  <div class="hst"></div><div class="hsb"></div>
+  <div class="htl-wrap">
+    <div style="font-size:calc(48px*var(--fs));margin-bottom:6px">🏮</div>
+    <div class="htl">猜字乐</div>
+    <div class="hrl"></div>
+    <div class="hsu">经典文化益智游戏</div>
+  </div>
+  <div class="home-cards">
+    <button class="mode-card mode-card-literary" onclick="startMode('literary')">
+      <div class="mc-icon">📜</div>
+      <div class="mc-text">
+        <div class="mc-title">诗词成语</div>
+        <div class="mc-sub">古诗词 · 成语<br>谚语短语</div>
+      </div>
+    </button>
+    <button class="mode-card mode-card-history" onclick="startMode('history')">
+      <div class="mc-icon">🏯</div>
+      <div class="mc-text">
+        <div class="mc-title">中国历史</div>
+        <div class="mc-sub">朝代 · 名人<br>历史事件</div>
+      </div>
+    </button>
+  </div>
+  <div class="home-settings" onclick="showSettings('home')">⚙ 设置</div>
+</div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║      LITERARY GAME SCREEN    ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div id="game" class="screen">
+  <div class="gib" id="gBg"></div>
+  <div class="gvg"></div><div class="gln"></div>
+  <div class="gbt"></div><div class="gbb"></div>
+  <div class="gin">
+    <div class="tpb">
+      <div class="ctg" id="catTag">古诗词</div>
+      <div class="skb">
+        <div class="sk-main">🔥 <span id="skN">0</span></div>
+        <div class="sk-best">最高 <span id="bestN">0</span></div>
+      </div>
+      <button class="gbtn" onclick="showSettings('game')">⚙</button>
+    </div>
+    <div class="qar">
+      <div class="qsr" id="qSrc"></div>
+      <div class="qtx" id="qTx"></div>
+    </div>
+    <div class="agd" id="agd"></div>
+  </div>
+  <div class="rec rec-lit" id="recBanner"></div>
+  <div class="mpn mpn-lit" id="mpn">
+    <div class="mpt">✨</div>
+    <div class="mph" id="mph"></div>
+    <div class="mpb" id="mpb"></div>
+    <div class="mpe" id="mpe"></div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║      HISTORY GAME SCREEN     ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div id="game-history" class="screen">
+  <div class="hgib" id="hgBg"></div>
+  <div class="hgvg"></div><div class="hgpat"></div>
+  <div class="hgbt"></div><div class="hgbb"></div>
+  <div class="gin">
+    <div class="tpb">
+      <div class="ctg th" id="hCatTag">中国历史</div>
+      <div class="skb">
+        <div class="sk-main-h">🏆 <span id="hSkN">0</span></div>
+        <div class="sk-best-h">最高 <span id="hBestN">0</span></div>
+      </div>
+      <button class="gbtn" style="opacity:.4;color:#f0e0c0" onclick="showSettings('game-history')">⚙</button>
+    </div>
+    <div class="qar">
+      <div class="qsr-h" id="hQSrc"></div>
+      <div class="qtx-h" id="hQTx"></div>
+    </div>
+    <div class="agd" id="hAgd"></div>
+  </div>
+  <div class="rec rec-his" id="hRecBanner"></div>
+  <div class="mpn mpn-his" id="hMpn">
+    <div class="mpt" id="hMpt">⚔️</div>
+    <div class="mph-h" id="hMph"></div>
+    <div class="mpb-h" id="hMpb"></div>
+    <div class="mpe-h" id="hMpe"></div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║     LITERARY MILESTONE       ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div id="milestone" class="screen">
+  <div class="msc">
+    <div class="mse" id="msE">🎉</div>
+    <div class="msm" id="msM">答得好！</div>
+    <div class="mss" id="msS">已答对 10 题</div>
+    <button class="msg" onclick="resumeGame('literary')">继续 →</button>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║     HISTORY MILESTONE        ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div id="milestone-history" class="screen">
+  <div class="msc-h">
+    <div class="mse" id="hMsE">🏯</div>
+    <div class="msm-h" id="hMsM">博古通今！</div>
+    <div class="mss-h" id="hMsS">已答对 10 题</div>
+    <button class="msg-h" onclick="resumeGame('history')">继续 →</button>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║          SETTINGS            ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div id="settings" class="screen">
+  <div class="shd">
+    <button class="bk" id="bkBtn" onclick="goBack()">←</button>
+    <div class="stl">设置</div>
+  </div>
+  <div class="sbl">
+    <div class="slb">字体大小</div>
+    <div class="fpr">春眠不觉晓</div>
+    <div class="slr">
+      <span style="font-size:20px">A</span>
+      <input type="range" class="fsl" id="fsSl" min="0.65" max="1.55" step="0.05" value="1" oninput="changeFS(this.value)"/>
+      <span style="font-size:33px">A</span>
+    </div>
+  </div>
+  <div class="sbl cats-section" id="catsSection">
+    <div class="slb">内容类别</div>
+    <div class="tgl">
+      <div class="tgr"><span class="tgn">古诗词</span><label class="tgsw"><input type="checkbox" id="tog-poem" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
+      <div class="tgr"><span class="tgn">成语</span><label class="tgsw"><input type="checkbox" id="tog-idiom" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
+      <div class="tgr"><span class="tgn">谚语短语</span><label class="tgsw"><input type="checkbox" id="tog-proverb" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
+    </div>
+  </div>
+  <div class="sbl"><button class="rsb" onclick="resetProgress()">重置游戏进度</button></div>
+</div>
+
+<script src="data.js"></script>
+<script>window.Q=Q;</script>
+<script src="data-history.js"></script>
+<script>
+// ── STATE ─────────────────────────────────────────────────────
+// Two independent game states
+const GS = {
+  literary: {queue:[],cur:null,sk:0,tot:0,ans:false},
+  history:  {queue:[],cur:null,sk:0,tot:0,ans:false},
+};
+let currentMode = 'literary'; // which mode is active
+let settingsFrom = 'home';
+let milestoneTimer = null;
+
+// ── STORAGE ───────────────────────────────────────────────────
+function ls(k,v){if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}
+function getBest(mode){return ls('yj_best_'+mode)||0;}
+function saveBest(mode,n){ls('yj_best_'+mode,n);}
+
+// ── SETTINGS ──────────────────────────────────────────────────
+function loadS(){
+  const s=ls('yj5')||{};
+  document.documentElement.style.setProperty('--fs',s.fs||1);
+  document.getElementById('fsSl').value=s.fs||1;
+  document.getElementById('tog-poem').checked=s.poem!==false;
+  document.getElementById('tog-idiom').checked=s.idiom!==false;
+  document.getElementById('tog-proverb').checked=s.proverb!==false;
+}
+function saveS(){
+  // enforce at least one category on
+  const poem=document.getElementById('tog-poem').checked;
+  const idiom=document.getElementById('tog-idiom').checked;
+  const proverb=document.getElementById('tog-proverb').checked;
+  if(!poem&&!idiom&&!proverb){
+    // revert last toggle
+    event.target.checked=true;return;
+  }
+  ls('yj5',{fs:parseFloat(document.getElementById('fsSl').value),poem,idiom,proverb});
+}
+function changeFS(v){document.documentElement.style.setProperty('--fs',v);saveS();}
+
+function activeCats(){
+  const s=ls('yj5')||{};
+  const c=[];
+  if(s.poem!==false)c.push('poem');
+  if(s.idiom!==false)c.push('idiom');
+  if(s.proverb!==false)c.push('proverb');
+  return c.length?c:['poem','idiom','proverb'];
+}
+
+// ── QUEUE BUILDERS ────────────────────────────────────────────
+function buildQ(mode){
+  const S=GS[mode];
+  let pool;
+  if(mode==='literary'){
+    const cats=activeCats();
+    pool=window.Q.filter(q=>cats.includes(q.c));
+  } else {
+    pool=window.Q.filter(q=>q.c==='历史');
+  }
+  const d1=pool.filter(q=>q.d===1).sort(()=>Math.random()-.5);
+  const d2=pool.filter(q=>q.d===2).sort(()=>Math.random()-.5);
+  const d3=pool.filter(q=>q.d===3).sort(()=>Math.random()-.5);
+  const warmup=Math.min(30,Math.floor(d1.length*0.5));
+  const easy=d1.slice(0,warmup);
+  const d1rest=d1.slice(warmup).sort(()=>Math.random()-.5);
+  const phase2=[...d1rest,...d2].sort(()=>Math.random()-.5);
+  const half=Math.floor(phase2.length/2);
+  const phase3=[...phase2.slice(0,half),...d3,...phase2.slice(half)];
+  S.queue=[...phase3,...easy].reverse();
+}
+
+function nextQ(mode){
+  const S=GS[mode];
+  if(!S.queue.length)buildQ(mode);
+  S.cur=S.queue.pop();
+  S.ans=false;
+  render(mode);
+}
+
+// ── RENDER ────────────────────────────────────────────────────
+function updateStreak(mode){
+  if(mode==='literary'){
+    document.getElementById('skN').textContent=GS.literary.sk;
+    document.getElementById('bestN').textContent=getBest('literary');
+  } else {
+    document.getElementById('hSkN').textContent=GS.history.sk;
+    document.getElementById('hBestN').textContent=getBest('history');
+  }
+}
+
+function render(mode){
+  const S=GS[mode];
+  const q=S.cur;
+  updateStreak(mode);
+
+  if(mode==='literary'){
+    const labels={poem:'古诗词',idiom:'成语',proverb:'谚语'};
+    const cls={poem:'tp',idiom:'ti',proverb:'tv'};
+    const tag=document.getElementById('catTag');
+    tag.textContent=labels[q.c];
+    tag.className='ctg '+cls[q.c];
+    document.getElementById('gBg').style.backgroundImage=`url('${q.i}')`;
+    document.getElementById('qSrc').textContent=q.a;
+    const qEl=document.getElementById('qTx');
+    qEl.innerHTML=q.t.replace('，','，<br>').replace(`{${q.b}}`,`<span class="blk">＿</span>`);
+    qEl.classList.remove('sli');void qEl.offsetWidth;qEl.classList.add('sli');
+    const grid=document.getElementById('agd');
+    grid.innerHTML='';
+    [...q.o].sort(()=>Math.random()-.5).forEach(opt=>{
+      const b=document.createElement('button');
+      b.className='abt';b.textContent=opt;
+      b.onclick=()=>pick(mode,opt,b);
+      grid.appendChild(b);
+    });
+    document.getElementById('mpn').classList.remove('show');
+    document.getElementById('recBanner').classList.remove('show');
+  } else {
+    document.getElementById('hgBg').style.backgroundImage=`url('${q.i}')`;
+    document.getElementById('hQSrc').textContent=q.a;
+    const qEl=document.getElementById('hQTx');
+    qEl.innerHTML=q.t.replace('，','，<br>').replace(`{${q.b}}`,`<span class="blk-h">＿</span>`);
+    qEl.classList.remove('sli');void qEl.offsetWidth;qEl.classList.add('sli');
+    const grid=document.getElementById('hAgd');
+    grid.innerHTML='';
+    [...q.o].sort(()=>Math.random()-.5).forEach(opt=>{
+      const b=document.createElement('button');
+      b.className='abt-h';b.textContent=opt;
+      b.onclick=()=>pick(mode,opt,b);
+      grid.appendChild(b);
+    });
+    document.getElementById('hMpn').classList.remove('show');
+    document.getElementById('hRecBanner').classList.remove('show');
+  }
+}
+
+// ── MEANING PANEL ─────────────────────────────────────────────
+function showMeaning(mode,q){
+  if(mode==='literary'){
+    const hi=q.t.replace(`{${q.b}}`,`<span class="hl">${q.b}</span>`).replace(/[{}]/g,'');
+    document.getElementById('mph').innerHTML=hi;
+    document.getElementById('mpb').textContent=q.a;
+    document.getElementById('mpe').textContent=q.e;
+    document.getElementById('mpn').classList.add('show');
+  } else {
+    const hi=q.t.replace(`{${q.b}}`,`<span class="hl">${q.b}</span>`).replace(/[{}]/g,'');
+    document.getElementById('hMph').innerHTML=hi;
+    document.getElementById('hMpb').textContent=q.a;
+    document.getElementById('hMpe').textContent=q.e;
+    // rotate emoji
+    const emojis=['⚔️','🏯','📜','🐉','🔱','🏛️'];
+    document.getElementById('hMpt').textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    document.getElementById('hMpn').classList.add('show');
+  }
+}
+
+// ── PICK ANSWER ───────────────────────────────────────────────
+function pick(mode,choice,btn){
+  const S=GS[mode];
+  if(S.ans)return;
+  S.ans=true;
+  const q=S.cur;
+  const gridId=mode==='literary'?'agd':'hAgd';
+  if(choice===q.b){
+    btn.classList.add('ok');
+    S.sk++;S.tot++;
+    const prev=getBest(mode);
+    if(S.sk>prev){saveBest(mode,S.sk);showRecordBanner(mode,S.sk);}
+    updateStreak(mode);
+    showMeaning(mode,q);
+    if(S.tot>0&&S.tot%10===0){setTimeout(()=>milestone(mode),2400);}
+    else{setTimeout(()=>nextQ(mode),2800);}
+  } else {
+    btn.classList.add('no');
+    S.sk=0;
+    updateStreak(mode);
+    setTimeout(()=>{
+      [...document.getElementById(gridId).children].forEach(b=>{if(b.textContent===q.b)b.classList.add('ok');});
+      setTimeout(()=>{
+        showMeaning(mode,q);
+        setTimeout(()=>nextQ(mode),3000);
+      },1000);
+    },500);
+  }
+}
+
+function showRecordBanner(mode,n){
+  const id=mode==='literary'?'recBanner':'hRecBanner';
+  const el=document.getElementById(id);
+  el.textContent=n===1?'🏅 首次连击！':`🏆 新纪录！连续答对 ${n} 题！`;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+// ── MILESTONE ─────────────────────────────────────────────────
+function milestone(mode){
+  if(milestoneTimer){clearTimeout(milestoneTimer);milestoneTimer=null;}
+  if(mode==='literary'){
+    const msgs=['答得好！','真厉害！','继续加油！','棒极了！','了不起！'];
+    const emojis=['🎉','🌟','🏆','🎊','👏'];
+    const i=Math.floor(Math.random()*msgs.length);
+    document.getElementById('msE').textContent=emojis[i];
+    document.getElementById('msM').textContent=msgs[i];
+    document.getElementById('msS').textContent=`已答对 ${GS.literary.tot} 题`;
+    scr('milestone');
+  } else {
+    const msgs=['博古通今！','史学大家！','学识渊博！','了不起！','历史达人！'];
+    const emojis=['🏯','🐉','📜','🔱','⚔️'];
+    const i=Math.floor(Math.random()*msgs.length);
+    document.getElementById('hMsE').textContent=emojis[i];
+    document.getElementById('hMsM').textContent=msgs[i];
+    document.getElementById('hMsS').textContent=`已答对 ${GS.history.tot} 题`;
+    scr('milestone-history');
+  }
+  milestoneTimer=setTimeout(()=>resumeGame(mode),3000);
+}
+
+function resumeGame(mode){
+  if(milestoneTimer){clearTimeout(milestoneTimer);milestoneTimer=null;}
+  scr(mode==='literary'?'game':'game-history');
+  nextQ(mode);
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function startMode(mode){
+  currentMode=mode;
+  buildQ(mode);
+  scr(mode==='literary'?'game':'game-history');
+  nextQ(mode);
+}
+
+function scr(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showSettings(from){
+  settingsFrom=from;
+  const isHistory=from==='game-history';
+  // Show/hide category toggles based on mode
+  document.getElementById('catsSection').classList.toggle('hidden',isHistory);
+  const label=from==='home'?'← 返回':isHistory?'← 返回游戏':'← 返回游戏';
+  document.getElementById('bkBtn').textContent=label;
+  loadS();
+  scr('settings');
+}
+
+function goBack(){
+  scr(settingsFrom);
+}
+
+function resetProgress(){
+  GS.literary.sk=0;GS.literary.tot=0;
+  GS.history.sk=0;GS.history.tot=0;
+  saveBest('literary',0);saveBest('history',0);
+  buildQ('literary');buildQ('history');
+  alert('进度已重置 ✓');
+}
+
+loadS();
+</script>
+</body>
+</html>
