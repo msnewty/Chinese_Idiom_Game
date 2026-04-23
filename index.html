@@ -324,7 +324,6 @@ input:checked+.tgtr::before{transform:translateX(28px)}
 </div>
 
 <script src="data.js"></script>
-<script>window.Q=Q;</script>
 <script src="data-history.js"></script>
 <script>
 // ── STATE ─────────────────────────────────────────────────────
@@ -379,9 +378,9 @@ function buildQ(mode){
   let pool;
   if(mode==='literary'){
     const cats=activeCats();
-    pool=window.Q.filter(q=>cats.includes(q.c));
+    pool=Q.filter(q=>cats.includes(q.c));
   } else {
-    pool=window.Q.filter(q=>q.c==='历史');
+    pool=window.QH;
   }
   const d1=pool.filter(q=>q.d===1).sort(()=>Math.random()-.5);
   const d2=pool.filter(q=>q.d===2).sort(()=>Math.random()-.5);
