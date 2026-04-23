@@ -1,0 +1,10 @@
+{
+  "name": "猜字乐",
+  "short_name": "猜字乐",
+  "description": "成语、古诗、谚语填字游戏",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#f2e8d5",
+  "theme_color": "#f2e8d5"
+}
