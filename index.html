@@ -237,14 +237,19 @@ function pick(choice,btn){
     document.getElementById('mpn').classList.add('show');
     if(S.tot>0&&S.tot%10===0){setTimeout(()=>milestone(),2400);}
     else{setTimeout(()=>nextQ(),2600);}
-  } else {
+ } else {
     btn.classList.add('no');S.sk=0;updateStreak();
     setTimeout(()=>{
       [...document.getElementById('agd').children].forEach(b=>{if(b.textContent===q.b)b.classList.add('ok');});
-      setTimeout(()=>nextQ(),1900);
+      setTimeout(()=>{
+        document.getElementById('mph').innerHTML=q.f.replace(q.b,`<span class="hl">${q.b}</span>`);
+        document.getElementById('mpb').textContent=q.a;
+        document.getElementById('mpe').textContent=q.e;
+        document.getElementById('mpn').classList.add('show');
+        setTimeout(()=>nextQ(),3000);
+      },1000);
     },500);
   }
-}
 
 function milestone(){
   const msgs=['答得好！','真厉害！','继续加油！','棒极了！','了不起！'];
@@ -254,6 +259,7 @@ function milestone(){
   document.getElementById('msM').textContent=msgs[i];
   document.getElementById('msS').textContent=`已答对 ${S.tot} 题`;
   scr('milestone');
+  setTimeout(()=>resumeGame(), 3000);
 }
 function resumeGame(){scr('game');nextQ();}
 function startGame(){buildQ();scr('game');nextQ();}
