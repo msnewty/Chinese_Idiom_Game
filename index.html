@@ -8,65 +8,148 @@
 <title>猜字乐</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet"/>
 <style>
-:root{--fs:1;--p:#f2e8d5;--p2:#e8d9bc;--ink:#1c1008;--im:rgba(28,16,8,0.42);--red:#8b1a1a;--rs:#f5e0e0;--grn:#1a4a2e;--gs:#dff0e8;--gld:#7a5c10;--gl:#f5ead0;--bd:rgba(28,16,8,0.13);--sh:rgba(28,16,8,0.09);--r:14px}
+:root{
+  --fs:1;
+  /* Literary palette */
+  --p:#f2e8d5;--p2:#e8d9bc;--ink:#1c1008;--im:rgba(28,16,8,0.42);
+  --red:#8b1a1a;--rs:#f5e0e0;--grn:#1a4a2e;--gs:#dff0e8;--gld:#7a5c10;--gl:#f5ead0;
+  --bd:rgba(28,16,8,0.13);--sh:rgba(28,16,8,0.09);--r:14px;
+  /* History / Imperial palette */
+  --him:#1a0a00;--hbg:#1c0a04;--hbg2:#2d1206;
+  --hred:#c0392b;--hred2:#e74c3c;--hgld:#d4a017;--hgld2:#f0c040;
+  --hpaper:#2a1206;
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--p);font-family:'Noto Serif SC',serif;touch-action:manipulation}
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
 .screen.active{opacity:1;pointer-events:all}
+
+/* ── HOME ──────────────────────────────────────────────── */
 #home{background:var(--p)}
 .hst,.hsb{position:absolute;left:0;right:0;height:7px;background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 20px,transparent 20px,transparent 30px)}
 .hst{top:0}.hsb{bottom:0}
-.hsc{display:flex;flex-direction:column;align-items:center;background:var(--p2);border:1.5px solid rgba(28,16,8,.18);border-radius:3px;padding:calc(38px*var(--fs)) calc(64px*var(--fs));box-shadow:0 6px 40px rgba(28,16,8,.12);position:relative}
-.hsc::before,.hsc::after{content:'';position:absolute;left:0;right:0;height:12px;background:linear-gradient(to bottom,rgba(28,16,8,.07),transparent)}
-.hsc::before{top:0;border-radius:3px 3px 0 0}.hsc::after{bottom:0;transform:rotate(180deg)}
-.htl{font-family:'Ma Shan Zheng',cursive;font-size:calc(82px*var(--fs));color:var(--ink);letter-spacing:12px;line-height:1;margin-bottom:4px}
-.hrl{width:72px;height:2px;background:var(--red);margin:14px auto}
-.hsu{font-size:calc(18px*var(--fs));color:var(--im);letter-spacing:6px;margin-bottom:calc(42px*var(--fs))}
-.hbn{background:var(--ink);color:var(--p);border:none;border-radius:3px;font-family:'Ma Shan Zheng',cursive;font-size:calc(32px*var(--fs));padding:calc(15px*var(--fs)) calc(62px*var(--fs));cursor:pointer;letter-spacing:6px;margin-bottom:18px;transition:transform .12s,opacity .12s}
-.hbn:active{transform:scale(.96);opacity:.88}
-.hcf{font-size:calc(17px*var(--fs));color:var(--im);cursor:pointer;letter-spacing:3px;padding:10px}
+.htl-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:calc(32px*var(--fs))}
+.htl{font-family:'Ma Shan Zheng',cursive;font-size:calc(76px*var(--fs));color:var(--ink);letter-spacing:10px;line-height:1}
+.hrl{width:64px;height:2px;background:var(--red);margin:12px auto}
+.hsu{font-size:calc(16px*var(--fs));color:var(--im);letter-spacing:5px}
+/* Two mode cards on home */
+.home-cards{display:flex;flex-direction:column;gap:18px;width:min(88vw,420px)}
+.mode-card{border-radius:10px;padding:calc(24px*var(--fs)) calc(28px*var(--fs));cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;overflow:hidden;border:none;width:100%;text-align:left;display:flex;align-items:center;gap:18px}
+.mode-card:active{transform:scale(.97)}
+.mode-card-literary{background:var(--p2);border:1.5px solid rgba(28,16,8,.18);box-shadow:0 4px 24px rgba(28,16,8,.12)}
+.mode-card-history{background:linear-gradient(135deg,#2d1206 0%,#1a0a04 100%);border:1.5px solid #7a3a10;box-shadow:0 4px 28px rgba(192,57,43,.22)}
+.mode-card-history::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(212,160,23,.04) 18px,rgba(212,160,23,.04) 19px);pointer-events:none}
+.mc-icon{font-size:calc(48px*var(--fs));flex-shrink:0}
+.mc-text{display:flex;flex-direction:column;gap:4px}
+.mc-title{font-family:'Ma Shan Zheng',cursive;letter-spacing:5px;line-height:1}
+.mc-sub{letter-spacing:2px;line-height:1.4}
+.mode-card-literary .mc-title{font-size:calc(32px*var(--fs));color:var(--ink)}
+.mode-card-literary .mc-sub{font-size:calc(15px*var(--fs));color:var(--im)}
+.mode-card-history .mc-title{font-size:calc(32px*var(--fs));color:var(--hgld2)}
+.mode-card-history .mc-sub{font-size:calc(15px*var(--fs));color:rgba(240,192,64,.6)}
+.home-settings{font-size:calc(16px*var(--fs));color:var(--im);cursor:pointer;letter-spacing:3px;padding:14px;margin-top:4px;text-align:center}
+
+/* ── GAME (LITERARY) ────────────────────────────────────── */
 #game{background:var(--p);justify-content:flex-start}
 .gib{position:absolute;inset:0;background-size:cover;background-position:center;background-color:#c8b89a;opacity:.09;filter:sepia(70%) saturate(.5);transition:background-image .6s}
 .gvg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,rgba(242,232,213,.72) 100%)}
 .gln{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(90deg,rgba(28,16,8,.035) 0,rgba(28,16,8,.035) 1px,transparent 1px,transparent 55px)}
 .gbt,.gbb{position:absolute;left:0;right:0;height:4px;background:rgba(28,16,8,.12)}
 .gbt{top:0}.gbb{bottom:0}
+
+/* ── GAME (HISTORY) ─────────────────────────────────────── */
+#game-history{background:var(--hbg);justify-content:flex-start}
+.hgib{position:absolute;inset:0;background-size:cover;background-position:center;background-color:#1c0a04;opacity:.14;filter:sepia(100%) saturate(.6) hue-rotate(330deg);transition:background-image .6s}
+.hgvg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(26,10,4,.82) 100%)}
+/* Dragon scale pattern overlay */
+.hgpat{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(30deg,transparent,transparent 22px,rgba(212,160,23,.04) 22px,rgba(212,160,23,.04) 23px),repeating-linear-gradient(150deg,transparent,transparent 22px,rgba(212,160,23,.03) 22px,rgba(212,160,23,.03) 23px)}
+.hgbt,.hgbb{position:absolute;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--hgld),transparent)}
+.hgbt{top:0}.hgbb{bottom:0}
+/* Corner ornaments */
+#game-history::before,#game-history::after{content:'❖';position:absolute;font-size:22px;color:rgba(212,160,23,.3);z-index:3}
+#game-history::before{top:12px;left:14px}
+#game-history::after{top:12px;right:14px}
+
+/* ── SHARED GAME INNER ───────────────────────────────────── */
 .gin{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 24px 24px}
 .tpb{width:100%;display:flex;align-items:center;justify-content:space-between}
-.ctg{font-size:calc(22px*var(--fs));font-weight:700;letter-spacing:3px;padding:6px 18px;border-radius:3px;border:1.5px solid currentColor}
+/* Literary category tags */
+.ctg{font-size:calc(20px*var(--fs));font-weight:700;letter-spacing:3px;padding:6px 16px;border-radius:3px;border:1.5px solid currentColor}
 .tp{color:var(--grn);background:var(--gs)}.ti{color:var(--red);background:var(--rs)}.tv{color:var(--gld);background:var(--gl)}
+/* History category tag */
+.th{color:var(--hgld2);background:rgba(212,160,23,.15);border-color:var(--hgld)}
+/* Streak */
 .skb{display:flex;flex-direction:column;align-items:center;gap:2px}
 .sk-main{display:flex;align-items:center;gap:7px;font-size:calc(22px*var(--fs));font-weight:700;color:var(--ink)}
+.sk-main-h{display:flex;align-items:center;gap:7px;font-size:calc(22px*var(--fs));font-weight:700;color:var(--hgld2)}
 .sk-best{font-size:calc(14px*var(--fs));color:var(--im);letter-spacing:1px}
+.sk-best-h{font-size:calc(14px*var(--fs));color:rgba(240,192,64,.5);letter-spacing:1px}
 .gbtn{background:none;border:none;cursor:pointer;font-size:calc(26px*var(--fs));opacity:.32;padding:8px}
 .gbtn:active{opacity:.7}
+/* Question area */
 .qar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;text-align:center;padding:0 16px}
-.qsr{font-size:calc(22px*var(--fs));color:rgba(28,16,8,0.65);letter-spacing:4px;margin-bottom:18px}
-.qtx{font-family:'Ma Shan Zheng',cursive;font-size:calc(54px*var(--fs));color:var(--ink);line-height:1.6;letter-spacing:5px}
+.qsr{font-size:calc(20px*var(--fs));color:rgba(28,16,8,0.55);letter-spacing:4px;margin-bottom:18px}
+.qsr-h{font-size:calc(20px*var(--fs));color:rgba(240,192,64,.55);letter-spacing:4px;margin-bottom:18px}
+.qtx{font-family:'Ma Shan Zheng',cursive;font-size:calc(50px*var(--fs));color:var(--ink);line-height:1.65;letter-spacing:5px}
+.qtx-h{font-family:'Ma Shan Zheng',cursive;font-size:calc(46px*var(--fs));color:#f0e0c0;line-height:1.65;letter-spacing:4px}
 .blk{display:inline-block;color:var(--red);min-width:calc(54px*var(--fs));text-align:center}
+.blk-h{display:inline-block;color:var(--hgld2);min-width:calc(54px*var(--fs));text-align:center;border-bottom:2px solid rgba(212,160,23,.5)}
+/* Answer grid */
 .agd{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:13px;max-width:700px}
-.abt{background:rgba(255,255,255,.88);border:1.5px solid var(--bd);border-radius:var(--r);font-family:'Ma Shan Zheng',cursive;font-size:calc(54px*var(--fs));color:var(--ink);padding:calc(14px*var(--fs)) 10px;cursor:pointer;box-shadow:0 2px 10px var(--sh);transition:transform .1s;min-height:calc(86px*var(--fs));display:flex;align-items:center;justify-content:center}
+/* Literary answer buttons */
+.abt{background:rgba(255,255,255,.88);border:1.5px solid var(--bd);border-radius:var(--r);font-family:'Ma Shan Zheng',cursive;font-size:calc(50px*var(--fs));color:var(--ink);padding:calc(14px*var(--fs)) 10px;cursor:pointer;box-shadow:0 2px 10px var(--sh);transition:transform .1s;min-height:calc(86px*var(--fs));display:flex;align-items:center;justify-content:center}
 .abt:active{transform:scale(.95)}
 .abt.ok{background:var(--gs);border-color:var(--grn);color:var(--grn);animation:pop .35s ease}
 .abt.no{background:var(--rs);border-color:var(--red);color:var(--red);animation:shk .4s ease}
+/* History answer buttons */
+.abt-h{background:rgba(45,18,6,.85);border:1.5px solid rgba(212,160,23,.35);border-radius:var(--r);font-family:'Ma Shan Zheng',cursive;font-size:calc(44px*var(--fs));color:#f0e0c0;padding:calc(14px*var(--fs)) 10px;cursor:pointer;box-shadow:0 2px 14px rgba(0,0,0,.4);transition:transform .1s;min-height:calc(86px*var(--fs));display:flex;align-items:center;justify-content:center}
+.abt-h:active{transform:scale(.95)}
+.abt-h.ok{background:rgba(30,70,30,.85);border-color:#4caf50;color:#81c784;animation:pop .35s ease}
+.abt-h.no{background:rgba(80,15,15,.85);border-color:var(--hred2);color:var(--hred2);animation:shk .4s ease}
+
 @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
 @keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
-.mpn{position:absolute;inset:0;z-index:10;background:rgba(20,10,4,.87);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 36px;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s}
+
+/* ── MEANING PANEL ──────────────────────────────────────── */
+.mpn{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 36px;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .mpn.show{opacity:1;pointer-events:all}
+/* Literary meaning panel */
+.mpn-lit{background:rgba(20,10,4,.87)}
+/* History meaning panel */
+.mpn-his{background:rgba(10,4,2,.92);border-top:2px solid rgba(212,160,23,.3);border-bottom:2px solid rgba(212,160,23,.3)}
 .mpt{font-size:calc(54px*var(--fs));margin-bottom:18px}
-.mph{font-family:'Ma Shan Zheng',cursive;font-size:calc(40px*var(--fs));color:var(--p2);letter-spacing:5px;line-height:1.65;margin-bottom:14px}
+.mph{font-family:'Ma Shan Zheng',cursive;font-size:calc(38px*var(--fs));color:var(--p2);letter-spacing:5px;line-height:1.65;margin-bottom:14px}
 .mph .hl{color:#e8c46a}
+.mph-h{font-family:'Ma Shan Zheng',cursive;font-size:calc(36px*var(--fs));color:#f0e0c0;letter-spacing:4px;line-height:1.65;margin-bottom:14px}
+.mph-h .hl{color:var(--hgld2)}
 .mpb{font-size:calc(18px*var(--fs));color:rgba(242,232,213,.42);letter-spacing:3px;margin-bottom:20px}
-.mpe{font-size:calc(24px*var(--fs));color:rgba(242,232,213,.82);line-height:1.65;max-width:520px}
-.rec{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:20;background:var(--ink);color:#e8c46a;font-family:'Ma Shan Zheng',cursive;font-size:calc(26px*var(--fs));padding:12px 28px;border-radius:40px;letter-spacing:3px;opacity:0;pointer-events:none;transition:opacity .4s;white-space:nowrap}
+.mpb-h{font-size:calc(18px*var(--fs));color:rgba(212,160,23,.45);letter-spacing:3px;margin-bottom:20px}
+.mpe{font-size:calc(22px*var(--fs));color:rgba(242,232,213,.82);line-height:1.65;max-width:520px}
+.mpe-h{font-size:calc(21px*var(--fs));color:rgba(240,224,192,.8);line-height:1.65;max-width:520px}
+
+/* ── RECORD BANNER ──────────────────────────────────────── */
+.rec{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:20;font-family:'Ma Shan Zheng',cursive;font-size:calc(26px*var(--fs));padding:12px 28px;border-radius:40px;letter-spacing:3px;opacity:0;pointer-events:none;transition:opacity .4s;white-space:nowrap}
+.rec-lit{background:var(--ink);color:#e8c46a}
+.rec-his{background:linear-gradient(90deg,#2d1206,#3d1a08);color:var(--hgld2);border:1px solid rgba(212,160,23,.4)}
 .rec.show{opacity:1}
+
+/* ── MILESTONE ──────────────────────────────────────────── */
 #milestone{background:var(--p)}
-.msc{background:var(--p2);border:1.5px solid rgba(28,16,8,.18);border-radius:3px;padding:calc(38px*var(--fs)) calc(56px*var(--fs));text-align:center;box-shadow:0 6px 40px rgba(28,16,8,.12)}
+#milestone-history{background:var(--hbg)}
+#milestone-history::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(212,160,23,.03) 30px,rgba(212,160,23,.03) 31px)}
+.msc{background:var(--p2);border:1.5px solid rgba(28,16,8,.18);border-radius:3px;padding:calc(38px*var(--fs)) calc(56px*var(--fs));text-align:center;box-shadow:0 6px 40px rgba(28,16,8,.12);position:relative;z-index:1}
+.msc-h{background:linear-gradient(135deg,#2d1206,#1a0a04);border:1.5px solid rgba(212,160,23,.35);border-radius:3px;padding:calc(38px*var(--fs)) calc(56px*var(--fs));text-align:center;box-shadow:0 6px 40px rgba(192,57,43,.2);position:relative;z-index:1}
+.msc-h::before,.msc-h::after{content:'─── ◆ ───';display:block;color:rgba(212,160,23,.4);font-size:16px;letter-spacing:4px}
 .mse{font-size:calc(78px*var(--fs));margin-bottom:14px;animation:bob 1.2s ease infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-.msm{font-family:'Ma Shan Zheng',cursive;font-size:calc(58px*var(--fs));color:var(--ink);letter-spacing:6px;margin-bottom:8px}
-.mss{font-size:calc(22px*var(--fs));color:var(--im);letter-spacing:2px;margin-bottom:38px}
+.msm{font-family:'Ma Shan Zheng',cursive;font-size:calc(54px*var(--fs));color:var(--ink);letter-spacing:6px;margin-bottom:8px}
+.msm-h{font-family:'Ma Shan Zheng',cursive;font-size:calc(54px*var(--fs));color:var(--hgld2);letter-spacing:6px;margin-bottom:8px}
+.mss{font-size:calc(20px*var(--fs));color:var(--im);letter-spacing:2px;margin-bottom:38px}
+.mss-h{font-size:calc(20px*var(--fs));color:rgba(212,160,23,.6);letter-spacing:2px;margin-bottom:38px}
 .msg{background:var(--ink);color:var(--p);border:none;border-radius:3px;font-family:'Ma Shan Zheng',cursive;font-size:calc(28px*var(--fs));padding:calc(14px*var(--fs)) calc(54px*var(--fs));cursor:pointer;letter-spacing:4px}
+.msg-h{background:linear-gradient(90deg,#8b2000,#c0392b);color:#f0e0c0;border:1.5px solid rgba(212,160,23,.4);border-radius:3px;font-family:'Ma Shan Zheng',cursive;font-size:calc(28px*var(--fs));padding:calc(14px*var(--fs)) calc(54px*var(--fs));cursor:pointer;letter-spacing:4px}
+
+/* ── SETTINGS ───────────────────────────────────────────── */
 #settings{background:var(--p);justify-content:flex-start;align-items:flex-start;padding:36px 28px;overflow-y:auto}
 .shd{width:100%;display:flex;align-items:center;gap:14px;margin-bottom:34px}
 .bk{background:none;border:none;font-size:calc(28px*var(--fs));cursor:pointer;color:var(--ink);padding:8px 8px 8px 0}
@@ -87,31 +170,55 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--p);font-family
 input:checked+.tgtr{background:var(--ink)}
 input:checked+.tgtr::before{transform:translateX(28px)}
 .rsb{width:100%;background:none;border:1.5px solid var(--bd);border-radius:var(--r);font-family:'Noto Serif SC',serif;font-size:calc(20px*var(--fs));color:var(--im);padding:14px;cursor:pointer;letter-spacing:2px}
+/* Category toggles hidden in history settings */
+.cats-section{display:block}
+.cats-section.hidden{display:none}
 .sli{animation:sli .3s ease forwards}
 @keyframes sli{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║          HOME SCREEN         ║ -->
+<!-- ╚══════════════════════════════╝ -->
 <div id="home" class="screen active">
   <div class="hst"></div><div class="hsb"></div>
-  <div class="hsc">
-    <div style="font-size:calc(54px*var(--fs));margin-bottom:6px">🏮</div>
+  <div class="htl-wrap">
+    <div style="font-size:calc(48px*var(--fs));margin-bottom:6px">🏮</div>
     <div class="htl">猜字乐</div>
     <div class="hrl"></div>
-    <div class="hsu">成语 · 古诗 · 谚语</div>
-    <button class="hbn" onclick="startGame()">开始游戏</button>
-    <div class="hcf" onclick="showSettings('home')">⚙ 设置</div>
+    <div class="hsu">经典文化益智游戏</div>
   </div>
+  <div class="home-cards">
+    <button class="mode-card mode-card-literary" onclick="startMode('literary')">
+      <div class="mc-icon">📜</div>
+      <div class="mc-text">
+        <div class="mc-title">诗词成语</div>
+        <div class="mc-sub">古诗词 · 成语 · 谚语短语</div>
+      </div>
+    </button>
+    <button class="mode-card mode-card-history" onclick="startMode('history')">
+      <div class="mc-icon">🏯</div>
+      <div class="mc-text">
+        <div class="mc-title">中国历史</div>
+        <div class="mc-sub">朝代 · 名人 · 历史事件</div>
+      </div>
+    </button>
+  </div>
+  <div class="home-settings" onclick="showSettings('home')">⚙ 设置</div>
 </div>
 
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║      LITERARY GAME SCREEN    ║ -->
+<!-- ╚══════════════════════════════╝ -->
 <div id="game" class="screen">
   <div class="gib" id="gBg"></div>
   <div class="gvg"></div><div class="gln"></div>
   <div class="gbt"></div><div class="gbb"></div>
   <div class="gin">
     <div class="tpb">
-      <div class="ctg" id="catTag">古诗</div>
+      <div class="ctg" id="catTag">古诗词</div>
       <div class="skb">
         <div class="sk-main">🔥 <span id="skN">0</span></div>
         <div class="sk-best">最高 <span id="bestN">0</span></div>
@@ -124,8 +231,8 @@ input:checked+.tgtr::before{transform:translateX(28px)}
     </div>
     <div class="agd" id="agd"></div>
   </div>
-  <div class="rec" id="recBanner"></div>
-  <div class="mpn" id="mpn">
+  <div class="rec rec-lit" id="recBanner"></div>
+  <div class="mpn mpn-lit" id="mpn">
     <div class="mpt">✨</div>
     <div class="mph" id="mph"></div>
     <div class="mpb" id="mpb"></div>
@@ -133,15 +240,64 @@ input:checked+.tgtr::before{transform:translateX(28px)}
   </div>
 </div>
 
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║      HISTORY GAME SCREEN     ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div id="game-history" class="screen">
+  <div class="hgib" id="hgBg"></div>
+  <div class="hgvg"></div><div class="hgpat"></div>
+  <div class="hgbt"></div><div class="hgbb"></div>
+  <div class="gin">
+    <div class="tpb">
+      <div class="ctg th" id="hCatTag">中国历史</div>
+      <div class="skb">
+        <div class="sk-main-h">🏆 <span id="hSkN">0</span></div>
+        <div class="sk-best-h">最高 <span id="hBestN">0</span></div>
+      </div>
+      <button class="gbtn" style="opacity:.4;color:#f0e0c0" onclick="showSettings('game-history')">⚙</button>
+    </div>
+    <div class="qar">
+      <div class="qsr-h" id="hQSrc"></div>
+      <div class="qtx-h" id="hQTx"></div>
+    </div>
+    <div class="agd" id="hAgd"></div>
+  </div>
+  <div class="rec rec-his" id="hRecBanner"></div>
+  <div class="mpn mpn-his" id="hMpn">
+    <div class="mpt" id="hMpt">⚔️</div>
+    <div class="mph-h" id="hMph"></div>
+    <div class="mpb-h" id="hMpb"></div>
+    <div class="mpe-h" id="hMpe"></div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║     LITERARY MILESTONE       ║ -->
+<!-- ╚══════════════════════════════╝ -->
 <div id="milestone" class="screen">
   <div class="msc">
     <div class="mse" id="msE">🎉</div>
     <div class="msm" id="msM">答得好！</div>
     <div class="mss" id="msS">已答对 10 题</div>
-    <button class="msg" onclick="resumeGame()">继续 →</button>
+    <button class="msg" onclick="resumeGame('literary')">继续 →</button>
   </div>
 </div>
 
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║     HISTORY MILESTONE        ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div id="milestone-history" class="screen">
+  <div class="msc-h">
+    <div class="mse" id="hMsE">🏯</div>
+    <div class="msm-h" id="hMsM">博古通今！</div>
+    <div class="mss-h" id="hMsS">已答对 10 题</div>
+    <button class="msg-h" onclick="resumeGame('history')">继续 →</button>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║          SETTINGS            ║ -->
+<!-- ╚══════════════════════════════╝ -->
 <div id="settings" class="screen">
   <div class="shd">
     <button class="bk" id="bkBtn" onclick="goBack()">←</button>
@@ -156,7 +312,7 @@ input:checked+.tgtr::before{transform:translateX(28px)}
       <span style="font-size:33px">A</span>
     </div>
   </div>
-  <div class="sbl">
+  <div class="sbl cats-section" id="catsSection">
     <div class="slb">内容类别</div>
     <div class="tgl">
       <div class="tgr"><span class="tgn">古诗词</span><label class="tgsw"><input type="checkbox" id="tog-poem" checked onchange="saveS()"/><span class="tgtr"></span></label></div>
@@ -168,14 +324,24 @@ input:checked+.tgtr::before{transform:translateX(28px)}
 </div>
 
 <script src="data.js"></script>
+<script src="data-history.js"></script>
 <script>
 // ── STATE ─────────────────────────────────────────────────────
-let S={queue:[],cur:null,sk:0,tot:0,ans:false,from:'home'};
+// Two independent game states
+const GS = {
+  literary: {queue:[],cur:null,sk:0,tot:0,ans:false},
+  history:  {queue:[],cur:null,sk:0,tot:0,ans:false},
+};
+let currentMode = 'literary'; // which mode is active
+let settingsFrom = 'home';
+let milestoneTimer = null;
 
+// ── STORAGE ───────────────────────────────────────────────────
 function ls(k,v){if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}
-function getBest(){return ls('yj_best')||0;}
-function saveBest(n){ls('yj_best',n);}
+function getBest(mode){return ls('yj_best_'+mode)||0;}
+function saveBest(mode,n){ls('yj_best_'+mode,n);}
 
+// ── SETTINGS ──────────────────────────────────────────────────
 function loadS(){
   const s=ls('yj5')||{};
   document.documentElement.style.setProperty('--fs',s.fs||1);
@@ -184,7 +350,17 @@ function loadS(){
   document.getElementById('tog-idiom').checked=s.idiom!==false;
   document.getElementById('tog-proverb').checked=s.proverb!==false;
 }
-function saveS(){ls('yj5',{fs:parseFloat(document.getElementById('fsSl').value),poem:document.getElementById('tog-poem').checked,idiom:document.getElementById('tog-idiom').checked,proverb:document.getElementById('tog-proverb').checked});}
+function saveS(){
+  // enforce at least one category on
+  const poem=document.getElementById('tog-poem').checked;
+  const idiom=document.getElementById('tog-idiom').checked;
+  const proverb=document.getElementById('tog-proverb').checked;
+  if(!poem&&!idiom&&!proverb){
+    // revert last toggle
+    event.target.checked=true;return;
+  }
+  ls('yj5',{fs:parseFloat(document.getElementById('fsSl').value),poem,idiom,proverb});
+}
 function changeFS(v){document.documentElement.style.setProperty('--fs',v);saveS();}
 
 function activeCats(){
@@ -196,135 +372,214 @@ function activeCats(){
   return c.length?c:['poem','idiom','proverb'];
 }
 
-// ── QUEUE BUILDER with difficulty progression ─────────────────
-// First 30 questions: difficulty 1 only
-// After 30: mix difficulty 1 & 2
-// After 40: mix all difficulties
-function buildQ(){
-  const cats=activeCats();
-  const pool=Q.filter(q=>cats.includes(q.c));
+// ── QUEUE BUILDERS ────────────────────────────────────────────
+function buildQ(mode){
+  const S=GS[mode];
+  let pool;
+  if(mode==='literary'){
+    const cats=activeCats();
+    pool=window.Q.filter(q=>cats.includes(q.c));
+  } else {
+    pool=window.Q.filter(q=>q.c==='历史');
+  }
   const d1=pool.filter(q=>q.d===1).sort(()=>Math.random()-.5);
   const d2=pool.filter(q=>q.d===2).sort(()=>Math.random()-.5);
   const d3=pool.filter(q=>q.d===3).sort(()=>Math.random()-.5);
-  // Build queue: 20 easy → mixed easy+medium → then all
-  // We store as segments that get consumed in order
-const warmup=Math.min(30,Math.floor(d1.length*0.5));
-const easy30=d1.slice(0,warmup);
-const d1rest=d1.slice(warmup).sort(()=>Math.random()-.5);
-const d2shuffled=d2.sort(()=>Math.random()-.5);
-const d3shuffled=d3.sort(()=>Math.random()-.5);
-// Phase 2: mix d1 and d2 equally
-const phase2=[...d1rest,...d2shuffled].sort(()=>Math.random()-.5);
-// Phase 3: sprinkle d3 into the back half
-const half=Math.floor(phase2.length/2);
-const phase3=[...phase2.slice(0,half),...d3shuffled,...phase2.slice(half)];
-S.queue=[...phase3,...easy30].reverse(); // reversed because we pop from end
-  // Note: easy30 goes at END of array so they are popped FIRST
+  const warmup=Math.min(30,Math.floor(d1.length*0.5));
+  const easy=d1.slice(0,warmup);
+  const d1rest=d1.slice(warmup).sort(()=>Math.random()-.5);
+  const phase2=[...d1rest,...d2].sort(()=>Math.random()-.5);
+  const half=Math.floor(phase2.length/2);
+  const phase3=[...phase2.slice(0,half),...d3,...phase2.slice(half)];
+  S.queue=[...phase3,...easy].reverse();
 }
 
-function nextQ(){
-  if(!S.queue.length)buildQ();
+function nextQ(mode){
+  const S=GS[mode];
+  if(!S.queue.length)buildQ(mode);
   S.cur=S.queue.pop();
   S.ans=false;
-  render();
+  render(mode);
 }
 
 // ── RENDER ────────────────────────────────────────────────────
-function updateStreak(){
-  document.getElementById('skN').textContent=S.sk;
-  document.getElementById('bestN').textContent=getBest();
+function updateStreak(mode){
+  if(mode==='literary'){
+    document.getElementById('skN').textContent=GS.literary.sk;
+    document.getElementById('bestN').textContent=getBest('literary');
+  } else {
+    document.getElementById('hSkN').textContent=GS.history.sk;
+    document.getElementById('hBestN').textContent=getBest('history');
+  }
 }
 
-function render(){
+function render(mode){
+  const S=GS[mode];
   const q=S.cur;
-  const labels={poem:'古诗词',idiom:'成语',proverb:'谚语'};
-  const cls={poem:'tp',idiom:'ti',proverb:'tv'};
-  const tag=document.getElementById('catTag');
-  tag.textContent=labels[q.c];
-  tag.className='ctg '+cls[q.c];
-  updateStreak();
-  document.getElementById('gBg').style.backgroundImage=`url('${q.i}')`;
-  document.getElementById('qSrc').textContent=q.a;
-  const qEl=document.getElementById('qTx');
-  qEl.innerHTML=q.t.replace('，','，<br>').replace(`{${q.b}}`,`<span class="blk">＿</span>`);
-  qEl.classList.remove('sli');void qEl.offsetWidth;qEl.classList.add('sli');
-  const grid=document.getElementById('agd');
-  grid.innerHTML='';
-  [...q.o].sort(()=>Math.random()-.5).forEach(opt=>{
-    const b=document.createElement('button');
-    b.className='abt';b.textContent=opt;
-    b.onclick=()=>pick(opt,b);
-    grid.appendChild(b);
-  });
-  document.getElementById('mpn').classList.remove('show');
-  document.getElementById('recBanner').classList.remove('show');
+  updateStreak(mode);
+
+  if(mode==='literary'){
+    const labels={poem:'古诗词',idiom:'成语',proverb:'谚语'};
+    const cls={poem:'tp',idiom:'ti',proverb:'tv'};
+    const tag=document.getElementById('catTag');
+    tag.textContent=labels[q.c];
+    tag.className='ctg '+cls[q.c];
+    document.getElementById('gBg').style.backgroundImage=`url('${q.i}')`;
+    document.getElementById('qSrc').textContent=q.a;
+    const qEl=document.getElementById('qTx');
+    qEl.innerHTML=q.t.replace('，','，<br>').replace(`{${q.b}}`,`<span class="blk">＿</span>`);
+    qEl.classList.remove('sli');void qEl.offsetWidth;qEl.classList.add('sli');
+    const grid=document.getElementById('agd');
+    grid.innerHTML='';
+    [...q.o].sort(()=>Math.random()-.5).forEach(opt=>{
+      const b=document.createElement('button');
+      b.className='abt';b.textContent=opt;
+      b.onclick=()=>pick(mode,opt,b);
+      grid.appendChild(b);
+    });
+    document.getElementById('mpn').classList.remove('show');
+    document.getElementById('recBanner').classList.remove('show');
+  } else {
+    document.getElementById('hgBg').style.backgroundImage=`url('${q.i}')`;
+    document.getElementById('hQSrc').textContent=q.a;
+    const qEl=document.getElementById('hQTx');
+    qEl.innerHTML=q.t.replace('，','，<br>').replace(`{${q.b}}`,`<span class="blk-h">＿</span>`);
+    qEl.classList.remove('sli');void qEl.offsetWidth;qEl.classList.add('sli');
+    const grid=document.getElementById('hAgd');
+    grid.innerHTML='';
+    [...q.o].sort(()=>Math.random()-.5).forEach(opt=>{
+      const b=document.createElement('button');
+      b.className='abt-h';b.textContent=opt;
+      b.onclick=()=>pick(mode,opt,b);
+      grid.appendChild(b);
+    });
+    document.getElementById('hMpn').classList.remove('show');
+    document.getElementById('hRecBanner').classList.remove('show');
+  }
 }
 
-// ── SHOW MEANING (correct or wrong) ──────────────────────────
-function showMeaning(q){
-  const hi=q.t.replace(`{${q.b}}`,`<span class="hl">${q.b}</span>`).replace(/[{}]/g,'');
-  document.getElementById('mph').innerHTML=hi;
-  document.getElementById('mpb').textContent=q.a;
-  document.getElementById('mpe').textContent=q.e;
-  document.getElementById('mpn').classList.add('show');
+// ── MEANING PANEL ─────────────────────────────────────────────
+function showMeaning(mode,q){
+  if(mode==='literary'){
+    const hi=q.t.replace(`{${q.b}}`,`<span class="hl">${q.b}</span>`).replace(/[{}]/g,'');
+    document.getElementById('mph').innerHTML=hi;
+    document.getElementById('mpb').textContent=q.a;
+    document.getElementById('mpe').textContent=q.e;
+    document.getElementById('mpn').classList.add('show');
+  } else {
+    const hi=q.t.replace(`{${q.b}}`,`<span class="hl">${q.b}</span>`).replace(/[{}]/g,'');
+    document.getElementById('hMph').innerHTML=hi;
+    document.getElementById('hMpb').textContent=q.a;
+    document.getElementById('hMpe').textContent=q.e;
+    // rotate emoji
+    const emojis=['⚔️','🏯','📜','🐉','🔱','🏛️'];
+    document.getElementById('hMpt').textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    document.getElementById('hMpn').classList.add('show');
+  }
 }
 
 // ── PICK ANSWER ───────────────────────────────────────────────
-function pick(choice,btn){
+function pick(mode,choice,btn){
+  const S=GS[mode];
   if(S.ans)return;
   S.ans=true;
   const q=S.cur;
+  const gridId=mode==='literary'?'agd':'hAgd';
   if(choice===q.b){
     btn.classList.add('ok');
     S.sk++;S.tot++;
-    const prev=getBest();
-    if(S.sk>prev){saveBest(S.sk);showRecordBanner(S.sk);}
-    updateStreak();
-    showMeaning(q);
-    if(S.tot>0&&S.tot%10===0){setTimeout(()=>milestone(),2400);}
-    else{setTimeout(()=>nextQ(),2800);}
+    const prev=getBest(mode);
+    if(S.sk>prev){saveBest(mode,S.sk);showRecordBanner(mode,S.sk);}
+    updateStreak(mode);
+    showMeaning(mode,q);
+    if(S.tot>0&&S.tot%10===0){setTimeout(()=>milestone(mode),2400);}
+    else{setTimeout(()=>nextQ(mode),2800);}
   } else {
     btn.classList.add('no');
     S.sk=0;
-    updateStreak();
+    updateStreak(mode);
     setTimeout(()=>{
-      [...document.getElementById('agd').children].forEach(b=>{if(b.textContent===q.b)b.classList.add('ok');});
+      [...document.getElementById(gridId).children].forEach(b=>{if(b.textContent===q.b)b.classList.add('ok');});
       setTimeout(()=>{
-        showMeaning(q);
-        setTimeout(()=>nextQ(),3000);
+        showMeaning(mode,q);
+        setTimeout(()=>nextQ(mode),3000);
       },1000);
     },500);
   }
 }
 
-function showRecordBanner(n){
-  const el=document.getElementById('recBanner');
+function showRecordBanner(mode,n){
+  const id=mode==='literary'?'recBanner':'hRecBanner';
+  const el=document.getElementById(id);
   el.textContent=n===1?'🏅 首次连击！':`🏆 新纪录！连续答对 ${n} 题！`;
   el.classList.add('show');
   setTimeout(()=>el.classList.remove('show'),2800);
 }
 
-let milestoneTimer=null;
-function milestone(){
-  const msgs=['答得好！','真厉害！','继续加油！','棒极了！','了不起！'];
-  const emojis=['🎉','🌟','🏆','🎊','👏'];
-  const i=Math.floor(Math.random()*msgs.length);
-  document.getElementById('msE').textContent=emojis[i];
-  document.getElementById('msM').textContent=msgs[i];
-  document.getElementById('msS').textContent=`已答对 ${S.tot} 题`;
-  scr('milestone');
-  milestoneTimer=setTimeout(()=>resumeGame(),3000);
-}
-function resumeGame(){
+// ── MILESTONE ─────────────────────────────────────────────────
+function milestone(mode){
   if(milestoneTimer){clearTimeout(milestoneTimer);milestoneTimer=null;}
-  scr('game');
-  nextQ();
+  if(mode==='literary'){
+    const msgs=['答得好！','真厉害！','继续加油！','棒极了！','了不起！'];
+    const emojis=['🎉','🌟','🏆','🎊','👏'];
+    const i=Math.floor(Math.random()*msgs.length);
+    document.getElementById('msE').textContent=emojis[i];
+    document.getElementById('msM').textContent=msgs[i];
+    document.getElementById('msS').textContent=`已答对 ${GS.literary.tot} 题`;
+    scr('milestone');
+  } else {
+    const msgs=['博古通今！','史学大家！','学识渊博！','了不起！','历史达人！'];
+    const emojis=['🏯','🐉','📜','🔱','⚔️'];
+    const i=Math.floor(Math.random()*msgs.length);
+    document.getElementById('hMsE').textContent=emojis[i];
+    document.getElementById('hMsM').textContent=msgs[i];
+    document.getElementById('hMsS').textContent=`已答对 ${GS.history.tot} 题`;
+    scr('milestone-history');
+  }
+  milestoneTimer=setTimeout(()=>resumeGame(mode),3000);
 }
-function startGame(){buildQ();scr('game');nextQ();}
-function scr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function showSettings(from){S.from=from;document.getElementById('bkBtn').textContent=from==='home'?'← 返回':'← 返回游戏';loadS();scr('settings');}
-function goBack(){scr(S.from);}
-function resetProgress(){S.sk=0;S.tot=0;saveBest(0);buildQ();alert('进度已重置 ✓');}
+
+function resumeGame(mode){
+  if(milestoneTimer){clearTimeout(milestoneTimer);milestoneTimer=null;}
+  scr(mode==='literary'?'game':'game-history');
+  nextQ(mode);
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function startMode(mode){
+  currentMode=mode;
+  buildQ(mode);
+  scr(mode==='literary'?'game':'game-history');
+  nextQ(mode);
+}
+
+function scr(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showSettings(from){
+  settingsFrom=from;
+  const isHistory=from==='game-history';
+  // Show/hide category toggles based on mode
+  document.getElementById('catsSection').classList.toggle('hidden',isHistory);
+  const label=from==='home'?'← 返回':isHistory?'← 返回游戏':'← 返回游戏';
+  document.getElementById('bkBtn').textContent=label;
+  loadS();
+  scr('settings');
+}
+
+function goBack(){
+  scr(settingsFrom);
+}
+
+function resetProgress(){
+  GS.literary.sk=0;GS.literary.tot=0;
+  GS.history.sk=0;GS.history.tot=0;
+  saveBest('literary',0);saveBest('history',0);
+  buildQ('literary');buildQ('history');
+  alert('进度已重置 ✓');
+}
 
 loadS();
 </script>
