@@ -32,21 +32,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--p);font-family
 .htl{font-family:'Ma Shan Zheng',cursive;font-size:calc(76px*var(--fs));color:var(--ink);letter-spacing:10px;line-height:1}
 .hrl{width:64px;height:2px;background:var(--red);margin:12px auto}
 .hsu{font-size:calc(16px*var(--fs));color:var(--im);letter-spacing:5px}
-/* Two mode cards on home */
-.home-cards{display:flex;flex-direction:column;gap:18px;width:min(88vw,420px)}
-.mode-card{border-radius:10px;padding:calc(24px*var(--fs)) calc(28px*var(--fs));cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;overflow:hidden;border:none;width:100%;text-align:left;display:flex;align-items:center;gap:18px}
+/* Two mode cards on home — side by side */
+.home-cards{display:flex;flex-direction:row;gap:16px;width:min(92vw,500px)}
+.mode-card{border-radius:14px;padding:calc(24px*var(--fs)) calc(12px*var(--fs));cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;overflow:hidden;border:none;flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
 .mode-card:active{transform:scale(.97)}
 .mode-card-literary{background:var(--p2);border:1.5px solid rgba(28,16,8,.18);box-shadow:0 4px 24px rgba(28,16,8,.12)}
-.mode-card-history{background:linear-gradient(135deg,#2d1206 0%,#1a0a04 100%);border:1.5px solid #7a3a10;box-shadow:0 4px 28px rgba(192,57,43,.22)}
+.mode-card-history{background:linear-gradient(155deg,#2d1206 0%,#1a0a04 100%);border:1.5px solid #7a3a10;box-shadow:0 4px 28px rgba(192,57,43,.22)}
 .mode-card-history::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(212,160,23,.04) 18px,rgba(212,160,23,.04) 19px);pointer-events:none}
-.mc-icon{font-size:calc(48px*var(--fs));flex-shrink:0}
-.mc-text{display:flex;flex-direction:column;gap:4px}
-.mc-title{font-family:'Ma Shan Zheng',cursive;letter-spacing:5px;line-height:1}
-.mc-sub{letter-spacing:2px;line-height:1.4}
-.mode-card-literary .mc-title{font-size:calc(32px*var(--fs));color:var(--ink)}
-.mode-card-literary .mc-sub{font-size:calc(15px*var(--fs));color:var(--im)}
-.mode-card-history .mc-title{font-size:calc(32px*var(--fs));color:var(--hgld2)}
-.mode-card-history .mc-sub{font-size:calc(15px*var(--fs));color:rgba(240,192,64,.6)}
+.mc-icon{font-size:calc(52px*var(--fs));flex-shrink:0}
+.mc-text{display:flex;flex-direction:column;gap:6px;position:relative;z-index:1}
+.mc-title{font-family:'Ma Shan Zheng',cursive;letter-spacing:4px;line-height:1.2}
+.mc-sub{letter-spacing:1px;line-height:1.5}
+.mode-card-literary .mc-title{font-size:calc(28px*var(--fs));color:var(--ink)}
+.mode-card-literary .mc-sub{font-size:calc(13px*var(--fs));color:var(--im)}
+.mode-card-history .mc-title{font-size:calc(28px*var(--fs));color:var(--hgld2)}
+.mode-card-history .mc-sub{font-size:calc(13px*var(--fs));color:rgba(240,192,64,.6)}
 .home-settings{font-size:calc(16px*var(--fs));color:var(--im);cursor:pointer;letter-spacing:3px;padding:14px;margin-top:4px;text-align:center}
 
 /* ── GAME (LITERARY) ────────────────────────────────────── */
@@ -195,14 +195,14 @@ input:checked+.tgtr::before{transform:translateX(28px)}
       <div class="mc-icon">📜</div>
       <div class="mc-text">
         <div class="mc-title">诗词成语</div>
-        <div class="mc-sub">古诗词 · 成语 · 谚语短语</div>
+        <div class="mc-sub">古诗词 · 成语<br>谚语短语</div>
       </div>
     </button>
     <button class="mode-card mode-card-history" onclick="startMode('history')">
       <div class="mc-icon">🏯</div>
       <div class="mc-text">
         <div class="mc-title">中国历史</div>
-        <div class="mc-sub">朝代 · 名人 · 历史事件</div>
+        <div class="mc-sub">朝代 · 名人<br>历史事件</div>
       </div>
     </button>
   </div>
@@ -324,6 +324,7 @@ input:checked+.tgtr::before{transform:translateX(28px)}
 </div>
 
 <script src="data.js"></script>
+<script>window.Q=Q;</script>
 <script src="data-history.js"></script>
 <script>
 // ── STATE ─────────────────────────────────────────────────────
