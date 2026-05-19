@@ -1,12 +1,6 @@
 # 猜字乐 · Guess the Character
 
-A Chinese game built with love for my father.
-
-My father is in his 80s and was diagnosed with dementia. He has always had a deep love for the Chinese language and history — reciting poems, trading proverbs, debating idioms. He spends a lot of time at home, and this game was created to give him something engaging and enjoyable to do on his own.
-
-猜字乐 grew out of that. It takes the poems, idioms and proverbs he has known his whole life and turns them into a gentle daily game — something he can pick up on his own, at his own pace, with no pressure and no confusion.
-
-No ads. No accounts. No internet needed after first load. Just a clean, calming game on his tablet that keeps his mind engaged and his love for the language alive.
+An offline fill-in-the-blank game built for my elderly father with dementia — drawing on his lifetime's love of Chinese history, idioms, and proverbs. No ads, no accounts, no pressure. Just questions, and the joy of getting them right.
 
 _May eventually be published to the Google Play Store to share with other families in a similar situation._
 
