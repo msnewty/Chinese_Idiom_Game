@@ -86,3 +86,4 @@ To update: edit files in GitHub → Vercel auto-deploys within 30 seconds.
 To install on tablet: open URL in Chrome → three-dot menu → Add to Home Screen → 猜字乐
 
 ---
+Updated: May 2026
