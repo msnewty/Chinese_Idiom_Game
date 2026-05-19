@@ -7,7 +7,16 @@
 <meta name="theme-color" content="#f2e8d5"/>
 <title>猜字乐</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet"/>
+<link rel="apple-touch-icon" href="icon-512.png"/>
+<link rel="manifest" href="manifest.json"/>
 <style>
+@font-face{
+  font-family:'Ma Shan Zheng';
+  src:url('MaShanZheng-Regular.ttf') format('truetype');
+  font-weight:normal;
+  font-style:normal;
+  font-display:swap;
+}
 :root{
   --fs:1;
   /* Literary palette */
@@ -125,6 +134,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--p);font-family
 
 @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
 @keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+@keyframes skReset{0%{color:var(--ink);transform:scale(1)}20%{color:#c0392b;transform:scale(1.18)}60%{color:#c0392b;transform:translateX(-6px)}80%{color:#c0392b;transform:translateX(6px)}100%{color:var(--ink);transform:scale(1)}}
+@keyframes skResetH{0%{color:var(--hgld2);transform:scale(1)}20%{color:#e74c3c;transform:scale(1.18)}60%{color:#e74c3c;transform:translateX(-6px)}80%{color:#e74c3c;transform:translateX(6px)}100%{color:var(--hgld2);transform:scale(1)}}
+.sk-reset{animation:skReset .55s ease forwards}
+.sk-reset-h{animation:skResetH .55s ease forwards}
 
 /* ── MEANING PANEL ──────────────────────────────────────── */
 .mpn{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 36px;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s}
@@ -242,7 +255,7 @@ input:checked+.tgtr::before{transform:translateX(28px)}
         <div class="sk-main">🔥 <span id="skN">0</span></div>
         <div class="sk-best">最高 <span id="bestN">0</span></div>
       </div>
-      <button class="gbtn" onclick="showSettings('game')">⚙</button>
+      <button class="gbtn" style="opacity:.65;font-size:calc(28px*var(--fs))" onclick="showSettings('game')">⚙</button>
     </div>
     <div class="qar">
       <div class="qsr" id="qSrc"></div>
@@ -276,7 +289,7 @@ input:checked+.tgtr::before{transform:translateX(28px)}
         <div class="sk-main-h">🏆 <span id="hSkN">0</span></div>
         <div class="sk-best-h">最高 <span id="hBestN">0</span></div>
       </div>
-      <button class="gbtn" style="opacity:.4;color:#f0e0c0" onclick="showSettings('game-history')">⚙</button>
+      <button class="gbtn" style="opacity:.65;color:#f0e0c0;font-size:calc(28px*var(--fs))" onclick="showSettings('game-history')">⚙</button>
     </div>
     <div class="qar">
       <div class="qsr-h" id="hQSrc"></div>
@@ -342,9 +355,17 @@ input:checked+.tgtr::before{transform:translateX(28px)}
       <div class="tgr"><span class="tgn">谚语短语</span><label class="tgsw"><input type="checkbox" id="tog-proverb" checked onchange="saveS(event)"/><span class="tgtr"></span></label></div>
     </div>
   </div>
+  <div class="sbl">
+    <div class="slb">背景音乐</div>
+    <div class="tgl">
+      <div class="tgr"><span class="tgn">开启背景音乐</span><label class="tgsw"><input type="checkbox" id="tog-music" onchange="toggleMusic(this.checked)"/><span class="tgtr"></span></label></div>
+    </div>
+  </div>
   <div class="sbl"><button class="rsb" onclick="resetProgress()">重置游戏进度</button></div>
 </div>
 
+<audio id="bgm-literary" src="music-literary.mp3" loop preload="none"></audio>
+<audio id="bgm-history" src="music-history.mp3" loop preload="none"></audio>
 <script src="data.js"></script>
 <script src="data-history.js?v=2"></script>
 <script>
@@ -371,6 +392,7 @@ function loadS(){
   document.getElementById('tog-poem').checked=s.poem!==false;
   document.getElementById('tog-idiom').checked=s.idiom!==false;
   document.getElementById('tog-proverb').checked=s.proverb!==false;
+  document.getElementById('tog-music').checked=s.music===true;
 }
 function saveS(e){
   const poem=document.getElementById('tog-poem').checked;
@@ -380,9 +402,42 @@ function saveS(e){
     if(e&&e.target)e.target.checked=true;
     return;
   }
-  ls('yj5',{fs:parseFloat(document.getElementById('fsSl').value),poem,idiom,proverb});
+  const music=document.getElementById('tog-music').checked;
+  ls('yj5',{fs:parseFloat(document.getElementById('fsSl').value),poem,idiom,proverb,music});
 }
 function changeFS(v){document.documentElement.style.setProperty('--fs',v);saveS();}
+
+// ── BACKGROUND MUSIC ──────────────────────────────────────────
+const BGM={
+  literary:document.getElementById('bgm-literary'),
+  history:document.getElementById('bgm-history'),
+};
+function isMusicOn(){return ls('yj5')&&ls('yj5').music===true;}
+function playBGM(mode){
+  if(!isMusicOn())return;
+  const active=BGM[mode];
+  const other=mode==='literary'?BGM.history:BGM.literary;
+  if(!other.paused){other.pause();other.currentTime=0;}
+  active.volume=0.32;
+  active.play().catch(()=>{});
+}
+function stopAllBGM(){
+  BGM.literary.pause();
+  BGM.history.pause();
+}
+function toggleMusic(on){
+  const s=ls('yj5')||{};
+  s.music=on;
+  ls('yj5',s);
+  if(on){
+    // Start music for whichever mode is currently active
+    const activeScreen=document.querySelector('.screen.active');
+    if(activeScreen&&activeScreen.id==='game')playBGM('literary');
+    else if(activeScreen&&activeScreen.id==='game-history')playBGM('history');
+  } else {
+    stopAllBGM();
+  }
+}
 
 function activeCats(){
   const s=ls('yj5')||{};
@@ -424,13 +479,27 @@ function nextQ(mode){
 }
 
 // ── RENDER ────────────────────────────────────────────────────
-function updateStreak(mode){
+function updateStreak(mode,reset){
   if(mode==='literary'){
-    document.getElementById('skN').textContent=GS.literary.sk;
+    const el=document.getElementById('skN');
+    el.textContent=GS.literary.sk;
     document.getElementById('bestN').textContent=getBest('literary');
+    if(reset){
+      el.classList.remove('sk-reset');
+      void el.offsetWidth;
+      el.classList.add('sk-reset');
+      setTimeout(()=>el.classList.remove('sk-reset'),600);
+    }
   } else {
-    document.getElementById('hSkN').textContent=GS.history.sk;
+    const el=document.getElementById('hSkN');
+    el.textContent=GS.history.sk;
     document.getElementById('hBestN').textContent=getBest('history');
+    if(reset){
+      el.classList.remove('sk-reset-h');
+      void el.offsetWidth;
+      el.classList.add('sk-reset-h');
+      setTimeout(()=>el.classList.remove('sk-reset-h'),600);
+    }
   }
 }
 
@@ -530,7 +599,7 @@ function pick(mode,choice,btn){
   } else {
     btn.classList.add('no');
     S.sk=0;
-    updateStreak(mode);
+    updateStreak(mode,true);
     setTimeout(()=>{
       [...document.getElementById(gridId).children].forEach(b=>{if(b.textContent===q.b)b.classList.add('ok');});
       setTimeout(()=>{
@@ -591,9 +660,11 @@ function startMode(mode){
   buildQ(mode);
   scr(mode==='literary'?'game':'game-history');
   nextQ(mode);
+  playBGM(mode);
 }
 
 function scr(id){
+  if(id==='home')stopAllBGM();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
@@ -611,6 +682,8 @@ function showSettings(from){
 
 function goBack(){
   scr(settingsFrom);
+  // If returning to home, stop all music
+  if(settingsFrom==='home')stopAllBGM();
 }
 
 function resetProgress(){

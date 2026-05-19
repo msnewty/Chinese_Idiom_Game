@@ -1,3 +1,8 @@
+// ⚠️  DEPRECATED — This file is no longer used.
+// All game logic has been consolidated into index.html.
+// This file is kept for reference only and is NOT loaded by the app.
+// Safe to delete.
+
 let S={queue:[],cur:null,sk:0,tot:0,ans:false,from:'home'};
 
 function ls(k,v){if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}
